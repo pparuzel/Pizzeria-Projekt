@@ -11,18 +11,18 @@ Wiele aplikacji umożliwiających złożenie zamówienia posiada nie sugestywny,
 
 ## Wymagania
 
-Możliwość złożenia zamówienia przez internet
-Możliwość płatności online(karta)
-Możliwość utworzenia konta użytkownika
-Możliwość zalogowania do systemu
-Przechowywanie  danych użytkownika
-Przechowywanie danych odnośnie zamówień użytkownika
-Możliwość modyfikacji danych personalnych użytkownika
-Możliwość wybrania pizzy
-Możliwość wybrania dodatków
-Możliwość wybrania sosów i napojów
-Możliwość sprawdzenia na jakim etapie jest dostawa pizzy
-Możliwość płatności przy odbiorze
+* Możliwość złożenia zamówienia przez internet
+* Możliwość płatności online(karta)
+* Możliwość utworzenia konta użytkownika
+* Możliwość zalogowania do systemu
+* Przechowywanie  danych użytkownika
+* Przechowywanie danych odnośnie zamówień użytkownika
+* Możliwość modyfikacji danych personalnych użytkownika
+* Możliwość wybrania pizzy
+* Możliwość wybrania dodatków
+* Możliwość wybrania sosów i napojów
+* Możliwość sprawdzenia na jakim etapie jest dostawa pizzy
+* Możliwość płatności przy odbiorze
 
 
 ## Zagrożenia
