@@ -61,6 +61,6 @@ Interfejs oferuje powiadomienie użytkownika o statusie zamówienia oraz możliw
 
 ## Narzędzia wykorzystane do realizacji interfejsu
 
-Graficzny interfejs użytkownika zostanie zrealizowany za pomocą przeglądarki internetowej oraz języków służących do tworzenia i stylizowania strony internetowej: **HTML**, **CSS**.  
+Graficzny interfejs użytkownika zostanie zrealizowany za pomocą przeglądarki internetowej oraz języków służących do tworzenia i stylizowania strony internetowej: **HTML**, **CSS**.  
 Symulacja serwera, odpowiedzialna za obsługę zapytań użytkowników oraz odpowiedzi zostanie zrealizowana za pomocą języka **Python 3**.  
 Dane przechowywane w aplikacji będą obsługiwane przez bazę danych **MySQL**.  
