@@ -51,13 +51,13 @@ Role w systemie:
 * Pracownik pizzerii
 
 
- Rozwiązanie problemu
+## Rozwiązanie problemu
 
 Aplikacja będzie oferować czytelny, przejrzysty oraz przyjemny dla użytkownika interfejs realizowany częściowo w stylu manipulacyjnym. Zostanie położony nacisk na prostotę w odbiorze oraz użytkowaniu interfejsu. Użytkownik będzie miał możliwość złożenia zamówienia przez internet, z wyborem sposobu płatności: on-line lub przy odbiorze. 
 Interfejs oferuje powiadomienie użytkownika o statusie zamówienia oraz możliwość monitorowania zamówienia. 
 
 
- Narzędzia wykorzystane do realizacji interfejsu
+## Narzędzia wykorzystane do realizacji interfejsu
 
 Graficzny interfejs użytkownika zostanie zrealizowany za pomocą przeglądarki internetowej oraz języków służących do tworzenia i stylizowania strony internetowej: HTML, CSS.
 Symulacja serwera, odpowiedzialna za obsługę zapytań użytkowników oraz odpowiedzi zostanie zrealizowana za pomocą języka Python 3. 
