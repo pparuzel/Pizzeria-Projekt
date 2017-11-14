@@ -27,18 +27,18 @@ Wiele aplikacji umożliwiających złożenie zamówienia posiada nie sugestywny,
 
 ## Zagrożenia
 
-Wprowadzenie niepoprawnej ilości danych (rejestracja)
-Wprowadzenie niepoprawnych danych (rejestracja)
-Wprowadzenie adresu poza obszarem usługi
-Próba zalogowania się na niezarejestrowany adres
-Wprowadzenie nieprawidłowego hasła
-Wprowadzenie niepoprawnych danych podczas składania zamówienia (nr karty etc.)
-Nie wybranie produktu
-Brak informacji o zamówieniu pomimo zapłacenia
-Błąd podczas płatności
-Brak środków na koncie
-Chęć zamówienia niedostępnego produktu
-Zbyt długi czas dostawy
+* Wprowadzenie niepoprawnej ilości danych (rejestracja)
+* Wprowadzenie niepoprawnych danych (rejestracja)
+* Wprowadzenie adresu poza obszarem usługi
+* Próba zalogowania się na niezarejestrowany adres
+* Wprowadzenie nieprawidłowego hasła
+* Wprowadzenie niepoprawnych danych podczas składania zamówienia (nr karty etc.)
+* Nie wybranie produktu
+* Brak informacji o zamówieniu pomimo zapłacenia
+* Błąd podczas płatności
+* Brak środków na koncie
+* Chęć zamówienia niedostępnego produktu
+* Zbyt długi czas dostawy
 
 
 ## Docelowy użytkownik
