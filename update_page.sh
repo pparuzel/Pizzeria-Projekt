@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-git subtree push --prefix html origin gh-pages
+git subtree push --prefix templates origin gh-pages
