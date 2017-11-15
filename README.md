@@ -1,5 +1,5 @@
 # Strona internetowa pizzerii
-[**Link do strony GitHub-Pages**](https://goo.gl/vmsAvZ "Pizzeria")  
+[**Link do strony GitHub-Pages**](https://goo.gl/5HAqbw "Pizzeria")  
 Autorzy: *Monika Wiech, Kamil Michno, Paweł Paruzel, Piotr Persona, Rafał Ziobro*
   
 Spis Tresci
