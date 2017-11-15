@@ -9,17 +9,16 @@ body {
 }
 
 #main-menu {
-  float: left;
-  position: fixed;
-  width: 100%;
-  height: 100px;
+  float: right;
+  width: calc(100% - 120px);
+  height: auto;
 }
 
 div a:link, a:visited {
   background-color: #ff3b3f;
   color: white;
+  width: 100%;
   height: 100%;
-  padding: 0 25px 0 25px;
   text-align: center; 
   text-decoration: none;
   display: inline-block;
@@ -32,11 +31,18 @@ div a:hover, a:active {
   border-radius: 0 0 15px 15px;
 }
 
+#upper-strip {
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  background-color: #ff3b3f;
+  z-index: 3;
+}
+
 div.menu-block {
   box-sizing: border-box;
-  background-color: #ff3b3f;
   height: 100px;
-  width: 25%;
+  width: 20%;
   font-family: Helvetica;
   font-weight: bold;
   font-size: calc(12px + 1.5vw);
@@ -55,18 +61,27 @@ div.menu-block {
   margin-top: 100px;
 }
 
-div.largen {
-  text-align: center;
-  font-family: Arial;
-  color: white;
-  background-color: gray;
-  width: 300px;
-  height: 100px;
-  line-height: 100px;
+#logo {
+  float: left;
+  width: 100px;
+  height: 100%;
+  background-image: url("logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  left: 20px;
+  top: 20px;
 }
 
-div.largen:hover {
-  height: 800px;
+.scroll-turn-on {
+  font-family: Helvetica;
+  color: gray;
+  float: right;
+  margin: 30px 100px;
+}
+
+input:checked + .slider ~ #largen {
+   height: 800px;
 }
 
 @media only screen and (max-width: 500px) {
@@ -74,16 +89,22 @@ div.largen:hover {
       width: 50%;
       font-size: 20px;
     }
-
+    #main-menu {
+      width: 100%;
+    }
     div a:hover, a:active {
       background-color: #e63538;
       padding-top: 0;
       border-radius: 15px;
     }
-    #main-menu {
+    #upper-strip {
       height: 200px;
     }
     #context {
       margin-top: 200px;
+    }
+    #logo {
+      visibility: hidden;
+      display: none;
     }
 }

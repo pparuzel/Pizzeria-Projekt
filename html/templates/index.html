@@ -3,16 +3,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="../static/style/style.css">
+  <link rel="stylesheet" type="text/css" href="../static/style/sliders.css">
   <body>
     <div id="content">
-      <div id="main-menu">
-        <div class="menu-block"><a href="">Projekt</a></div>
-        <div class="menu-block"><a href="">Menu</a></div>
-        <div class="menu-block"><a href="">O nas</a></div>
-        <div class="menu-block"><a href="">Kontakt</a></div>
+      <div id="upper-strip">
+        <div id="logo"></div>
+        <div id="main-menu">
+          <div class="menu-block"><a href="">Pizzeria</a></div>
+          <div class="menu-block"><a href="">Menu</a></div>
+          <div class="menu-block"><a href="">O nas</a></div>
+          <div class="menu-block"><a href="">Kontakt</a></div>
+        </div>
       </div>
       <div id="context">
-        <div class="largen">{{ custom_text }}</div>
+        <div class="scroll-turn-on">
+          Kliknij aby umożliwić scroll'owanie strony
+          <label for="select1" class="switch">
+          <input id="select1" type="checkbox">
+          <span class="slider round"></span>
+          <div id="largen"></div>
+          </label>
+        </div>
       </div>
     </div>
   </body>
