@@ -76,6 +76,7 @@ div.largen:hover {
     }
 
     div a:hover, a:active {
+      background-color: #e63538;
       padding-top: 0;
       border-radius: 15px;
     }
