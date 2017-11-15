@@ -92,7 +92,7 @@ input:checked + .slider ~ #largen {
     #main-menu {
       width: 100%;
     }
-    div a:hover, a:active {
+    div a:hover, a:active, a:focus {
       background-color: #e63538;
       padding-top: 0;
       border-radius: 15px;
@@ -104,7 +104,9 @@ input:checked + .slider ~ #largen {
       margin-top: 200px;
     }
     #logo {
-      visibility: hidden;
-      display: none;
+      visibility: visible;
+      width: 60px;
+      position: absolute;
+      top: 160px;
     }
 }
