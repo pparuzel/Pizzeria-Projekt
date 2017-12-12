@@ -10,6 +10,7 @@ def index():
         return render_template('index.html')
 
 
+# get user's info from database
 @app.route('/profile', methods=['GET'])
 def user_profile():
     if request.method == 'GET':
@@ -22,6 +23,7 @@ def show_menu():
         return render_template('menu.html')
 
 
+# validate user's info from database
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
@@ -29,6 +31,7 @@ def login():
         return redirect(url_for('index'))
 
 
+# add user to database
 @app.route('/register', methods=['POST'])
 def register():
     if request.method == 'POST':
@@ -36,8 +39,10 @@ def register():
         return redirect(url_for('index'))
 
 
+# update user with database
 @app.route('/update_user', methods=['POST'])
 def update_user():
     if request.method == 'POST':
         print('user update')
         return redirect(url_for('user_profile'))
+
