@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
+</head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="../static/style/style.css">
@@ -13,6 +16,43 @@
           <div class="menu-block"><a href="">Menu</a></div>
           <div class="menu-block"><a href="">O nas</a></div>
           <div class="menu-block"><a href="">Kontakt</a></div>
+          <div class="menu-block">
+            {% if not logged_in %}
+              <button onclick="open_popup_div(register_div)">utwórz konto</button>
+            {% endif %}
+            <div id="register_background" style="display: none;">
+              <div id="register" style="background-color: #2196F3">
+                <form action="http://localhost:5000/register" method="post">
+                  <button onclick="close_popup_div(register_div)">utwórz konto</button>
+                </form>
+              </div>
+            </div>
+            <script>
+              var register_div = document.getElementById("register_background")
+            </script>
+            {% if not logged_in %}
+              <button onclick="open_popup_div(login_div)">zaloguj</button>
+            {% endif %}
+            <div id="login_background" style="display: none;">
+              <div id="login" style="background-color: #2196F3">
+                <form action="http://localhost:5000/login" method="post">
+                  <button onclick="close_popup_div(login_div)">zaloguj</button>
+                </form>
+              </div>
+            </div>
+            <script>
+              var login_div = document.getElementById("login_background")
+            </script>
+            {% if logged_in %}
+            <form action="http://localhost:5000/profile">
+              <button>pokaż konto</button>
+            </form>
+            {% endif %}
+            <form action="http://localhost:5000/menu">
+              <button>menu</button>
+            </form>
+          </div>
+          </div>
         </div>
       </div>
       <div id="context">

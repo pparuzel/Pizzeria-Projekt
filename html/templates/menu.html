@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+<body>
+    <form action="http://localhost:5000/" method="get">
+        <button>powrót</button>
+    </form>
+    <form action="http://localhost:5000/show_order" , method="post">
+        <label>
+            {% for pizza in products %}
+                {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
+                    <input type="checkbox" name="check_group" value="{{ pizza }}">
+                {% endif %}
+                {% for data in pizza %}
+                    {{ data }}
+                {% endfor %}
+                <br><br>
+            {% endfor %}
+        </label><br>
+        {% if logged_in %}
+            <button class="close_button">zamów</button>
+        {% endif %}
+    </form>
+</body>
+</html>

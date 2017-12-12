@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>your order</title>
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
+</head>
+<body>
+    {% for product in selected_products %}
+        <p>
+            {% for data in product %}
+                {{ data }}
+            {% endfor %}
+        </p>
+    {% endfor %}
+    <button onclick="open_popup_div(info_div)">zatwierdź zamówienie</button>
+    <form action="http://localhost:5000/menu", method="get">
+        <button>powrót</button>
+    </form>
+    <div id="info_popup_background" style="display: none">
+        <div id="info_popup">
+            <p>
+                Brawo, udało ci się złożyć zamówienie ;D
+                Przewidywany czas dostarczenia zamówienia:
+                {{ delivery_time }} minut.
+            </p>
+            <form action="http://localhost:5000/make_order">
+                <button onclick="close_popup_div(info_div)">OK!</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        var info_div = document.getElementById("info_popup_background");
+    </script>
+</body>
+</html>
