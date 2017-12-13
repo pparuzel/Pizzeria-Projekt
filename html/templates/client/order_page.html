@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>your order</title>
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/style/client_style.css">
+</head>
+<body>
+    <div id="order_info">
+        {% for product in selected_products %}
+        <p>
+            {% for data in product %}
+                {{ data }}
+            {% endfor %}
+        </p>
+        {% endfor %}
+
+        <h3>Czy chcesz dostarczyć zamówienie na podany adres?</h3>
+        {% for info in address %}
+        <p>{{ info }}</p>
+        {% endfor %}
+        <!--<button onclick="open_popup_div(address_div)">wprowadź inny adres</button>-->
+        <button onclick="open_popup_div(info_div)">zatwierdź zamówienie</button>
+    </div>
+    <div id="address_background" class="popup-background">
+        <div id="address">
+            <form action="http://localhost:5000/change_order_address" method="post">
+                <label>
+                    ulica:
+                    <input name="street" type="text">
+                </label>
+                <label>
+                    nr lokalu:
+                    <input name="flat_nr" type="text">
+                </label>
+                <label>
+                    miasto:
+                    <input name="city" type="text">
+                </label>
+                <button onclick="close_popup_div(address_div)">zatwierdź adres</button>
+            </form>
+            <button onclick="close_popup_div(address_div)">zamknij okno</button>
+        </div>
+    </div>
+    <script>
+        var address_div = document.getElementById("address_background")
+    </script>
+    <form action="http://localhost:5000/menu" method="get">
+        <button>powrót</button>
+    </form>
+    <div id="info_popup_background" class="popup-background">
+        <div id="info_popup">
+            <p>
+                Brawo, udało ci się złożyć zamówienie ;D
+                Przewidywany czas dostarczenia zamówienia:
+                {{ delivery_time }} minut.
+            </p>
+            <form action="http://localhost:5000/make_order">
+                <button onclick="close_popup_div(info_div)">OK!</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        var info_div = document.getElementById("info_popup_background");
+    </script>
+</body>
+</html>
