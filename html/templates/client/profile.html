@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/style/client_style.css">
+</head>
+<body>
+    <div>
+        <h2>Witaj</h2>
+        <h1>{{ username }}</h1>
+        <h3>Informacje o tobie</h3>
+        {% for data in user_info %}
+            <p>{{ data }}</p>
+        {% endfor %}
+        <button>Przeglądaj zamówienia</button>
+        <button onclick="open_popup_div(profile_div)">Edytuj dane osobowe</button>
+        <div id="profile_background" class="popup-background">
+            <div id="profile">
+                <form action="http://localhost:5000/update_user" method="post">
+                    <label>
+                        imię:
+                        <input type="text">
+                    </label>
+                    <label>
+                        nazwisko:
+                        <input type="text">
+                    </label>
+                    <label>
+                        email:
+                        <input type="text">
+                    </label>
+                    <label>
+                        telefon:
+                        <input type="text">
+                    </label>
+                    <label>
+                        ulica:
+                        <input name="street" type="text">
+                    </label>
+                    <label>
+                        nr lokalu:
+                        <input name="flat_nr" type="text">
+                    </label>
+                    <label>
+                        miasto:
+                        <input name="city" type="text">
+                    </label>
+                    <button>zaktualizuj profil</button>
+                </form>
+                <button onclick="close_popup_div(profile_div)">zamknij okno</button>
+            </div>
+        </div>
+        <script>
+            var profile_div = document.getElementById("profile_background")
+        </script>
+
+        <button onclick="open_popup_div(password_div)">zmień hasło</button>
+
+        <div id="password_background" class="popup-background">
+            <div id="password">
+                <form action="http://localhost:5000/verify_password" method="post">
+                    <label>
+                        podaj stare hasło:
+                        <input name="password" type="password">
+                    </label>
+                    <label>
+                        hasło:
+                        <input name="password" type="password">
+                      </label>
+                      <label>
+                        powtórz hasło:
+                        <input name="repeat_password" type="password">
+                      </label>
+                    <button onclick="close_popup_div(password_div)">Zatwierdź</button>
+                </form>
+                <button onclick="close_popup_div(password_div)">zamknij okno</button>
+            </div>
+        </div>
+        <script>
+            var password_div = document.getElementById("password_background")
+        </script>
+        <form action="http://localhost:5000/" method="get">
+            <button>powrót do strony głównej</button>
+        </form>
+    </div>
+</body>
+</html>
