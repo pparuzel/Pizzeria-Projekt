@@ -2,11 +2,12 @@
 <html>
 <head>
   <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
-</head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="../static/style/style.css">
-  <link rel="stylesheet" type="text/css" href="../static/style/sliders.css">
+  <link rel="stylesheet" type="text/css" href="../../static/style/style.css">
+  <link rel="stylesheet" type="text/css" href="../../static/style/sliders.css">
+  <link rel="stylesheet" type="text/css" href="../../static/style/client_style.css">
+</head>
   <body>
     <div id="content">
       <div id="upper-strip">
@@ -20,11 +21,48 @@
             {% if not logged_in %}
               <button onclick="open_popup_div(register_div)">utwórz konto</button>
             {% endif %}
-            <div id="register_background" style="display: none;">
-              <div id="register" style="background-color: #2196F3">
+            <div id="register_background" class="popup-background">
+              <div id="register">
                 <form action="http://localhost:5000/register" method="post">
+                  <label>
+                    imię:
+                    <input name="first_name" type="text">
+                  </label>
+                  <label>
+                    nazwisko:
+                    <input name="last_name" type="text">
+                  </label>
+                  <label>
+                    email:
+                    <input name="email" type="text">
+                  </label>
+                  <label>
+                    hasło:
+                    <input name="password" type="password">
+                  </label>
+                  <label>
+                    powtórz hasło:
+                    <input name="repeat_password" type="password">
+                  </label>
+                  <label>
+                    telefon:
+                    <input phone="phone" type="text">
+                  </label>
+                  <label>
+                    ulica:
+                    <input name="street" type="text">
+                  </label>
+                  <label>
+                    nr lokalu:
+                    <input name="flat_nr" type="text">
+                  </label>
+                  <label>
+                    miasto:
+                    <input name="city" type="text">
+                  </label>
                   <button onclick="close_popup_div(register_div)">utwórz konto</button>
                 </form>
+                <button onclick="close_popup_div(register_div)">zamknij okno</button>
               </div>
             </div>
             <script>
@@ -33,11 +71,20 @@
             {% if not logged_in %}
               <button onclick="open_popup_div(login_div)">zaloguj</button>
             {% endif %}
-            <div id="login_background" style="display: none;">
-              <div id="login" style="background-color: #2196F3">
+            <div id="login_background" class="popup-background">
+              <div id="login">
                 <form action="http://localhost:5000/login" method="post">
+                  <label>
+                    email:
+                    <input name="email" type="text">
+                  </label>
+                  <label>
+                    hasło:
+                    <input name="password" type="password">
+                  </label>
                   <button onclick="close_popup_div(login_div)">zaloguj</button>
                 </form>
+                <button onclick="close_popup_div(login_div)">zamknij okno</button>
               </div>
             </div>
             <script>

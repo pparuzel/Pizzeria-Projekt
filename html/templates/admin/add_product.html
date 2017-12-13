@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nowy produkt</title>
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/style/admin_style.css">
+</head>
+<body>
+    <div id="controller">
+        <button onclick="open_popup_div(add_pizza_div)">dodaj pizzę</button>
+        <button onclick="open_popup_div(add_drink_div)">dodaj napój</button>
+        <button onclick="open_popup_div(add_addition_div)">dodaj dodatek</button>
+        <form action="http://localhost:5000/admin" method="post">
+            <button>powrót do strony głównej</button>
+        </form>
+    </div>
+    <div id="add_pizza_div_background" class="popup-background">
+        <div id="add_pizza_div">
+            <form>
+                <label>
+                    nazwa:
+                    <input type="text">
+                </label>
+                <label>
+                    składniki
+                    <input type="text">
+                </label>
+                <label>
+                    cena:
+                    <input type="text">
+                </label>
+                <button>Zatwierdź</button>
+            </form>
+            <button onclick="close_popup_div(add_pizza_div)">zamknij okno</button>
+        </div>
+    </div>
+    <script>
+        var add_pizza_div = document.getElementById("add_pizza_div_background")
+    </script>
+    <div id="add_drink_div_background" class="popup-background">
+        <div id="add_drink_div">
+            <form>
+                <label>
+                    nazwa:
+                    <input type="text">
+                </label>
+                <label>
+                    cena:
+                    <input type="text">
+                </label>
+                <button>Zatwierdź</button>
+            </form>
+            <button onclick="close_popup_div(add_drink_div)">zamknij okno</button>
+        </div>
+    </div>
+    <script>
+        var add_drink_div = document.getElementById("add_drink_div_background")
+    </script>
+    <div id="add_addition_div_background" class="popup-background">
+        <div id="add_addition_div">
+            <form>
+                <label>
+                    nazwa:
+                    <input type="text">
+                </label>
+                <label>
+                    cena:
+                    <input type="text">
+                </label>
+                <button>Zatwierdź</button>
+            </form>
+            <button onclick="close_popup_div(add_addition_div)">zamknij okno</button>
+        </div>
+    </div>
+    <script>
+        var add_addition_div = document.getElementById("add_addition_div_background")
+    </script>
+</body>
+</html>
