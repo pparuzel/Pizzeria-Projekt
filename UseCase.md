@@ -3,10 +3,7 @@
 
 Monika Wiech, Kamil Michno, Paweł Paruzel, Piotr Persona, Rafał Ziobro
 
-1.
-###
-### 1.
- Diagram przypadków użycia
+### 1. Diagram przypadków użycia
 
 Aktorzy:
 
@@ -57,10 +54,7 @@ Aktorzy:
 |   |   | 8. System informuje o wyniku operacji |
 |   |   | 9. System dodaje nową pozycję do bazy danych i informuje o wyniku operacji |
 
-1.
-###
-### 2.
- Wymagania interfejsu od strony użytkownika
+### 2. Wymagania interfejsu od strony użytkownika
 
 - Jako użytkownik chce móc zalogować się do systemu
 - Jako użytkownik chce móc zamówić pizzę
