@@ -8,10 +8,12 @@
 </head>
 <body>
     <div id="order_info">
-        {% for product in selected_products %}
+        {% for pizza in selected_pizzas %}
         <p>
-            {% for data in product %}
-                {{ data }}
+            {{ pizza }}
+            <br>
+            {% for topping in selected_toppings %}
+            {{ topping }}
             {% endfor %}
         </p>
         {% endfor %}

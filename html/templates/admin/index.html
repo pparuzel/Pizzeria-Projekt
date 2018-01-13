@@ -1,22 +1,21 @@
-<!DOCTYPE html>
+{% extends 'admin/master.html' %}
+{% block head %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login admin</title>
-    <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="../../static/style/client_style.css">
-</head>
-<body>
-    <div>
-        panel admina
-    </div>
-    <div id="controller">
-        <form action="http://localhost:5000/add_product_page">
-            <button>dodaj nowy produkt</button>
-        </form>
-        <form action="http://localhost:5000/show_products">
-            <button>przeglądaj dostępne produkty</button>
-        </form>
-    </div>
-</body>
-</html>
+<meta charset="UTF-8">
+<title>Login admin</title>
+<script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="../../static/style/client_style.css">
+{% endblock head %}
+{% block body %}
+    <!--<div>-->
+        <!--panel admina-->
+    <!--</div>-->
+    <!--<div id="controller">-->
+        <!--<form action="http://localhost:5000/add_product_page">-->
+            <!--<button>dodaj nowy produkt</button>-->
+        <!--</form>-->
+        <!--<form action="http://localhost:5000/show_products">-->
+            <!--<button>przeglądaj dostępne produkty</button>-->
+        <!--</form>-->
+    <!--</div>-->
+{% endblock body %}

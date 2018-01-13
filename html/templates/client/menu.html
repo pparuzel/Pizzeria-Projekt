@@ -5,24 +5,37 @@
     <title>Menu</title>
 </head>
 <body>
-    <form action="http://localhost:5000/" method="get">
-        <button>powrót</button>
-    </form>
     <form action="http://localhost:5000/show_order" , method="post">
         <label>
-            {% for pizza in products %}
+            {% for pizza in pizzas %}
+                {{ pizza }}
                 {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
-                    <input type="checkbox" name="check_group" value="{{ pizza }}">
+                    <input type="checkbox" name="check_group_pizza" value="{{ pizza.id }}">
                 {% endif %}
-                {% for data in pizza %}
-                    {{ data }}
+                <br>
+                <p>Dodatki: </p>
+                {% for topping in toppings %}
+                    {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
+                        <input type="checkbox" name="check_group_topping" value="{{ pizza.id }}.{{ topping.id }}">
+                    {% endif %}
+                    {{ topping }}
                 {% endfor %}
-                <br><br>
+                <br><br><br>
+            {% endfor %}
+            {% for drink in drinks %}
+                {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
+                    <input type="checkbox" name="check_group_drink" value="drink{{ drink.id }}">
+                {% endif %}
+                {{ drink }}
+                <br>
             {% endfor %}
         </label><br>
         {% if logged_in %}
             <button class="close_button">zamów</button>
         {% endif %}
+        <form action="http://localhost:5000/" method="get">
+            <button>powrót</button>
+        </form>
     </form>
 </body>
 </html>

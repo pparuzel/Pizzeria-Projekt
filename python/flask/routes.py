@@ -1,6 +1,11 @@
 from flask import redirect, render_template, url_for, request
 
 from python.flask.app import app
+from python.flask.app import db
+from python.flask.app import PizzaToppings, Order, Drink, User, Pizza
+from flask_admin import Admin as FlaskAdmin
+from flask_admin.contrib.sqla import ModelView
+
 
 #
 # guest
@@ -11,7 +16,7 @@ from python.flask.app import app
 def index():
     if request.method == 'GET':
         print('† index')
-        is_logged_in = True
+        is_logged_in = False
         return render_template('client/index.html', logged_in=is_logged_in)
 
 
@@ -37,29 +42,38 @@ def register():
 
 @app.route('/menu', methods=['GET'])
 def show_menu():
-    # read from DB
-    pizzas = [
-        ['margarita', 'sos, ser, oregano, bazylia', 21.50],
-        ['salami', 'sos, ser, oregano, salami', 22.50],
-        ['z szynką', 'sos, ser, oregano, szynka', 22.50],
-        ['hawajska', 'sos, ser, oregano, ananas, szynka', 24.50]
-    ]
+    pizzas = Pizza.query.all()
+    toppings = PizzaToppings.query.all()
+    drinks = Drink.query.all()
+    print(pizzas)
+    print(toppings)
+    print(drinks)
     if request.method == 'GET':
         is_logged_in = True
-        return render_template('client/menu.html', products=pizzas, logged_in=is_logged_in)
+        return render_template('client/menu.html',
+                               logged_in=is_logged_in,
+                               pizzas=pizzas,
+                               toppings=toppings,
+                               drinks=drinks
+                            )
 
 
 @app.route('/show_order', methods=['POST', 'GET'])
 def show_current_order():
     import random
     if request.method == 'POST':
-        selected_products = request.form.getlist('check_group')
-        if len(selected_products) > 0:
-            print(selected_products)
+        selected_pizzas = request.form.getlist('check_group_pizza')
+        selected_toppings = request.form.getlist('check_group_topping')
+        selected_drinks = request.form.getlist('check_group_drink')
+        if len(selected_pizzas) > 0:
+            print(selected_pizzas)
+            print(selected_toppings)
+            print(selected_drinks)
             delivery_time = random.randint(45, 90)
             address = ['Alejkowa', '45b/4', 'Kraków']
             return render_template('client/order_page.html',
-                                   selected_products=selected_products,
+                                   selected_pizzas=selected_pizzas,
+                                   selected_toppings=selected_toppings,
                                    delivery_time=delivery_time,
                                    address=address)
         else:
@@ -119,38 +133,91 @@ def verify_password():
 # admin
 #
 
-@app.route('/admin_login')
-def admin_login_page():
-    return render_template('admin/login.html')
+# @app.route('/admin_login')
+# def admin_login_page():
+#     return render_template('admin/login.html')
+#
+#
+# @app.route('/admin_index', methods=['POST', 'GET'])
+# def admin_index_page():
+#     return render_template('admin/index.html')
+#
+
+# # TODO password check
+# @app.route('/admin', methods=['POST', 'GET'])
+# def admin_login():
+#     if request.method == 'GET':
+#         return redirect(url_for('admin_login_page'))
+#     if request.method == 'POST':
+#         return redirect(url_for('admin_index_page'))
 
 
-@app.route('/admin_index', methods=['POST', 'GET'])
-def admin_index_page():
-    return render_template('admin/index.html')
+# @app.route('/add_product_page', methods=['POST', 'GET'])
+# def add_product_page():
+#     if request.method == 'GET':
+#         return render_template('admin/add_product.html')
+#
+#
+# @app.route('/show_products', methods=['POST', 'GET'])
+# def show_products():
+#     return render_template('admin/products.html')
+#
+#
+# @app.route('/add_product/<product_type>', methods=['POST', 'GET'])
+# def add_product(product_type):
+#     if request.method == 'POST':
+#         print(product_type)
+#         return redirect(url_for('add_product_page'))
 
 
-# TODO password check
-@app.route('/admin', methods=['POST', 'GET'])
-def admin_login():
-    if request.method == 'GET':
-        return redirect(url_for('admin_login_page'))
-    if request.method == 'POST':
-        return redirect(url_for('admin_index_page'))
+# views
+
+class PizzaView(ModelView):
+
+    can_create = True
+    can_edit = True
+    can_delete = True
 
 
-@app.route('/add_product_page', methods=['POST', 'GET'])
-def add_product_page():
-    if request.method == 'GET':
-        return render_template('admin/add_product.html')
+class PizzaToppingsView(ModelView):
+
+    can_create = True
+    can_edit = True
+    can_delete = True
 
 
-@app.route('/show_products', methods=['POST', 'GET'])
-def show_products():
-    return render_template('admin/products.html')
+class DrinkView(ModelView):
+
+    can_create = True
+    can_edit = True
+    can_delete = True
 
 
-@app.route('/add_product/<product_type>', methods=['POST', 'GET'])
-def add_product(product_type):
-    if request.method == 'POST':
-        print(product_type)
-        return redirect(url_for('add_product_page'))
+class UserView(ModelView):
+
+    can_create = False
+    can_edit = False
+    can_delete = False
+
+
+class OrderView(ModelView):
+
+    can_create = False
+    can_edit = True
+    can_delete = True
+
+
+def setup_admin_view():
+    admin = FlaskAdmin(app, name='pizzeria-admin', template_mode='bootstrap3', url='/admin')
+
+    pizza_view = PizzaView(Pizza, db.session)
+    pizza_toppings_view = PizzaToppingsView(PizzaToppings, db.session)
+    drink_view = DrinkView(Drink, db.session)
+    user_view = UserView(User, db.session)
+    order_view = OrderView(Order, db.session)
+
+    admin.add_view(order_view)
+    admin.add_view(pizza_view)
+    admin.add_view(pizza_toppings_view)
+    admin.add_view(drink_view)
+    admin.add_view(user_view)
