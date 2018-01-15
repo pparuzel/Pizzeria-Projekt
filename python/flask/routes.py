@@ -5,6 +5,8 @@ from python.flask.app import db
 from python.flask.app import PizzaToppings, Order, Drink, User, Pizza
 from flask_admin import Admin as FlaskAdmin
 from flask_admin.contrib.sqla import ModelView
+from flask import session as session_handler
+import collections
 
 
 #
@@ -16,15 +18,27 @@ from flask_admin.contrib.sqla import ModelView
 def index():
     if request.method == 'GET':
         print('† index')
-        is_logged_in = False
-        return render_template('client/index.html', logged_in=is_logged_in)
+        email_in_session = 'email' in session_handler
+        return render_template('client/index.html', logged_in=email_in_session)
 
 
 # validate user's info from database
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
-        print('login')
+        email = request.form['email']
+        password = request.form['password']
+        user = User.query.filter_by(email=email).first()
+        if password == user.password:
+            session_handler['email'] = (email, user.id)
+        return redirect(url_for('index'))
+
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    if request.method == 'POST':
+        if 'email' in session_handler:
+            session_handler.pop('email')
         return redirect(url_for('index'))
 
 
@@ -32,7 +46,27 @@ def login():
 @app.route('/register', methods=['POST'])
 def register():
     if request.method == 'POST':
-        print('register')
+        password1 = request.form['password']
+        password2 = request.form['password2']
+        if password1 == password2:
+            first_name = request.form['first_name']
+            last_name = request.form['last_name']
+            email = request.form['email']
+            street = request.form['street']
+            flat_nr = request.form['flat_nr']
+
+            new_user = User(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                password=password1,
+                street=street,
+                flat_nr=flat_nr
+            )
+
+            db.session.add(new_user)
+            db.session.commit()
+
         return redirect(url_for('index'))
 
 
@@ -45,11 +79,8 @@ def show_menu():
     pizzas = Pizza.query.all()
     toppings = PizzaToppings.query.all()
     drinks = Drink.query.all()
-    print(pizzas)
-    print(toppings)
-    print(drinks)
     if request.method == 'GET':
-        is_logged_in = True
+        is_logged_in = 'email' in session_handler
         return render_template('client/menu.html',
                                logged_in=is_logged_in,
                                pizzas=pizzas,
@@ -63,13 +94,16 @@ def show_current_order():
     import random
     if request.method == 'POST':
         selected_pizzas = request.form.getlist('check_group_pizza')
+        amount_of_selected_pizzas = request.form['quantity']
         selected_toppings = request.form.getlist('check_group_topping')
         selected_drinks = request.form.getlist('check_group_drink')
         if len(selected_pizzas) > 0:
             print(selected_pizzas)
             print(selected_toppings)
             print(selected_drinks)
+            print(amount_of_selected_pizzas)
             delivery_time = random.randint(45, 90)
+            # get user's address
             address = ['Alejkowa', '45b/4', 'Kraków']
             return render_template('client/order_page.html',
                                    selected_pizzas=selected_pizzas,
@@ -90,9 +124,11 @@ def change_address():
 
 @app.route('/make_order', methods=['POST', 'GET'])
 def make_order():
-    # put order into DB
-    # show pop up
-    return redirect(url_for('index'))
+    if request.method == 'POST':
+
+        # put order into DB
+        # show pop up
+        return redirect(url_for('index'))
 
 
 #
@@ -103,30 +139,67 @@ def make_order():
 @app.route('/update_user', methods=['POST'])
 def update_user():
     if request.method == 'POST':
-        print('user update')
-        return redirect(url_for('user_profile'))
+        if 'email' in session_handler:
+            user = User.query.get(session_handler['email'][1])
+
+            first_name = request.form['first_name']
+            last_name = request.form['last_name']
+            street = request.form['street']
+            flat_nr = request.form['flat_nr']
+
+            if len(first_name) > 0:
+                user.first_name = first_name
+            if len(last_name) > 0:
+                user.last = last_name
+            if len(street) > 0:
+                user.street = street
+            if len(flat_nr) > 0:
+                user.flat_nr = flat_nr
+
+            db.session.commit()
+            return redirect(url_for('user_profile'))
+        else:
+            return redirect(url_for('index')), 403
 
 
 # get user's info from database
 @app.route('/profile', methods=['GET'])
 def user_profile():
     if request.method == 'GET':
-        user_info = {
-            'first_name': 'Piotr',
-            'last_name': 'Persona',
-            'email': 'persona.piotr@gmail.com',
-            'phone': '123456789'
-        }
-        return render_template('client/profile.html',
-                               username=user_info['first_name'],
-                               user_info=user_info.values())
+        if 'email' in session_handler:
+            user = User.query.get(session_handler['email'][1])
+            user_info = {
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
+                'street': user.street,
+                'flat_nr': user.flat_nr
+            }
+
+            return render_template('client/profile.html',
+                                   username=user_info['first_name'],
+                                   user_info=user_info.values())
+        else:
+            return redirect(url_for('index')), 403
 
 
-@app.route('/verify_password', methods=['POST', 'GET'])
-def verify_password():
+@app.route('/change_password', methods=['POST'])
+def change_password():
     if request.method == 'POST':
-        # handle validation
-        return redirect(url_for('user_profile'))
+        if 'email' in session_handler:
+            user = User.query.get(session_handler['email'][1])
+            user_password = user.password
+            old_password = request.form['old_password']
+            if user_password == old_password:
+                new_password = request.form['new_password']
+                repeat_new_password = request.form['repeat_new_password']
+                if new_password == repeat_new_password:
+                    user.password = new_password
+                    db.session.commit()
+                    return redirect(url_for('user_profile'))
+            return "passwords does not match"
+        else:
+            return redirect(url_for('index'))
 
 
 #
@@ -198,6 +271,8 @@ class UserView(ModelView):
     can_create = False
     can_edit = False
     can_delete = False
+
+    column_list = ('first_name', 'last_name', 'email', 'street', 'flat_nr')
 
 
 class OrderView(ModelView):

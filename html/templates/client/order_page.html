@@ -22,7 +22,7 @@
         {% for info in address %}
         <p>{{ info }}</p>
         {% endfor %}
-        <!--<button onclick="open_popup_div(address_div)">wprowadź inny adres</button>-->
+        <button onclick="open_popup_div(address_div)">wprowadź inny adres</button>
         <button onclick="open_popup_div(info_div)">zatwierdź zamówienie</button>
     </div>
     <div id="address_background" class="popup-background">
@@ -58,7 +58,7 @@
                 Przewidywany czas dostarczenia zamówienia:
                 {{ delivery_time }} minut.
             </p>
-            <form action="http://localhost:5000/make_order">
+            <form action="http://localhost:5000/make_order" method="post">
                 <button onclick="close_popup_div(info_div)">OK!</button>
             </form>
         </div>
