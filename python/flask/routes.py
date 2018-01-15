@@ -3,11 +3,14 @@ from flask import redirect, render_template, url_for, request
 from python.flask.app import app
 from python.flask.app import db
 from python.flask.app import PizzaToppings, Order, Drink, User, Pizza
+from python.flask.app import order_pizza_relationship, pizza_toppings_relationship, order_drink_relationship
 from flask_admin import Admin as FlaskAdmin
 from flask_admin.contrib.sqla import ModelView
 from flask import session as session_handler
-import collections
+from copy import deepcopy
 
+
+shopping_cart = {}
 
 #
 # guest
@@ -31,6 +34,7 @@ def login():
         user = User.query.filter_by(email=email).first()
         if password == user.password:
             session_handler['email'] = (email, user.id)
+            shopping_cart[email] = []
         return redirect(url_for('index'))
 
 
@@ -86,7 +90,7 @@ def show_menu():
                                pizzas=pizzas,
                                toppings=toppings,
                                drinks=drinks
-                            )
+                               )
 
 
 @app.route('/show_order', methods=['POST', 'GET'])
@@ -116,6 +120,59 @@ def show_current_order():
         return render_template('client/order_page.html')
 
 
+@app.route('/add_to_cart', methods=['POST'])
+def add_to_cart():
+    if request.method == 'POST':
+        selected_pizza = list(request.form)[0]
+        amount_of_pizza = request.form[selected_pizza]
+        pizza_size = request.form['select_size']
+        selected_toppings = request.form.getlist('check_group_topping')
+        toppings = [int(topping_id) for topping_id in selected_toppings]
+
+        cart_pos = {
+            'pizza_id': selected_pizza,
+            'pizza_size': pizza_size,
+            'amount': amount_of_pizza,
+            'toppings': toppings
+        }
+
+        user_email = session_handler['email'][0]
+        shopping_cart[user_email].append(cart_pos)
+
+        return redirect(url_for('show_menu'))
+
+
+@app.route('/add_drink_to_cart', methods=['POST'])
+def add_drink_to_cart():
+    if request.method == 'POST':
+        selected_drink = request.form['drink']
+
+        drink_cart_pos = {
+            'drink': selected_drink
+        }
+
+        user_email = session_handler['email'][0]
+        shopping_cart[user_email].append(drink_cart_pos)
+        return redirect(url_for('show_menu'))
+
+
+@app.route('/remove_from_cart', methods=['POST'])
+def remove_from_cart():
+    if request.method == 'POST':
+        to_remove = request.form['pos']
+        user_email = session_handler['email'][0]
+        shopping_cart[user_email].pop(int(to_remove))
+    return redirect(url_for('show_cart'))
+
+
+@app.route('/cart', methods=['GET'])
+def show_cart():
+    if request.method == 'GET':
+        user_email = session_handler['email'][0]
+        user_shopping_cart = shopping_cart[user_email]
+        return render_template('client/cart.html', cart=shopping_cart[session_handler['email'][0]])
+
+
 @app.route('/change_order_address', methods=['POST', 'GET'])
 def change_address():
     if request.method == 'POST':
@@ -125,9 +182,14 @@ def change_address():
 @app.route('/make_order', methods=['POST', 'GET'])
 def make_order():
     if request.method == 'POST':
-
+        from datetime import datetime
         # put order into DB
-        # show pop up
+        user_email = session_handler['email'][0]
+        cart = shopping_cart[user_email]
+        print(cart)
+        order = Order(date=datetime.now())
+
+
         return redirect(url_for('index'))
 
 
@@ -205,43 +267,6 @@ def change_password():
 #
 # admin
 #
-
-# @app.route('/admin_login')
-# def admin_login_page():
-#     return render_template('admin/login.html')
-#
-#
-# @app.route('/admin_index', methods=['POST', 'GET'])
-# def admin_index_page():
-#     return render_template('admin/index.html')
-#
-
-# # TODO password check
-# @app.route('/admin', methods=['POST', 'GET'])
-# def admin_login():
-#     if request.method == 'GET':
-#         return redirect(url_for('admin_login_page'))
-#     if request.method == 'POST':
-#         return redirect(url_for('admin_index_page'))
-
-
-# @app.route('/add_product_page', methods=['POST', 'GET'])
-# def add_product_page():
-#     if request.method == 'GET':
-#         return render_template('admin/add_product.html')
-#
-#
-# @app.route('/show_products', methods=['POST', 'GET'])
-# def show_products():
-#     return render_template('admin/products.html')
-#
-#
-# @app.route('/add_product/<product_type>', methods=['POST', 'GET'])
-# def add_product(product_type):
-#     if request.method == 'POST':
-#         print(product_type)
-#         return redirect(url_for('add_product_page'))
-
 
 # views
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Koszyk</title>
+</head>
+<body>
+    {% for pos in cart %}
+        {{ pos }}
+        <form action="{{ url_for('remove_from_cart') }}" method="post">
+            <input type="hidden" name="pos" value="{{ cart.index(pos) }}">
+            <button>Usuń z koszyka</button>
+        </form>
+    <br>
+    {% endfor %}
+    <form action="{{ url_for('make_order') }}" method="post">
+        <button type="submit">Zamów</button>
+    </form>
+    <form action="{{ url_for('show_menu') }}" method="get">
+        <button>Powrót</button>
+    </form>
+</body>
+</html>

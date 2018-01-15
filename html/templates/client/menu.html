@@ -5,41 +5,59 @@
     <title>Menu</title>
 </head>
 <body>
-    <form action="http://localhost:5000/show_order" , method="post">
-        <label>
-            {% for pizza in pizzas %}
-                {{ pizza }}
-                {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
-                    <input type="number" name="{{ pizza.id }}" min="1" max="5">
-                    <select>
-                        <option value="small">Mała</option>
-                        <option value="medium">Średnia</option>
-                        <option value="large">Duża</option>
-                    </select>
-                {% endif %}
-                <br>
-                <p>Dodatki: </p>
-                {% for topping in toppings %}
-                    {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
-                        <input type="checkbox" name="check_group_topping" value="{{ pizza.id }}.{{ topping.id }}">
-                    {% endif %}
-                    {{ topping }}
-                {% endfor %}
-                <br><br><br>
-            {% endfor %}
-            {% for drink in drinks %}
-                {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
-                    <input type="checkbox" name="check_group_drink" value="drink{{ drink.id }}">
-                {% endif %}
-                {{ drink }}
-                <br>
-            {% endfor %}
-        </label><br>
-        {% if logged_in %}
-            <button class="close_button">zamów</button>
+    {% for pizza in pizzas %}
+        <form action="{{ url_for('add_to_cart') }}" , method="post">
+        {{ pizza }}
+        {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
+            <label>
+                <input type="number" name="{{ pizza.id }}" min="1" max="5" value="1">
+            </label>
+            <label>
+                <select name="select_size">
+                    <option value="small">Mała</option>
+                    <option value="medium">Średnia</option>
+                    <option value="large">Duża</option>
+                </select>
+            </label>
+            {% endif %}
+        <br>
+        <p>Dodatki: </p>
+        {% for topping in toppings %}
+            {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
+                <label>
+                    <input type="checkbox" name="check_group_topping" value="{{ topping.id }}">
+                </label>
+            {% endif %}
+            {{ topping }},
+        {% endfor %}
+        <br>
+            {% if logged_in %}
+                <button type="submit">Dodaj do koszyka</button>
+            {% endif %}
+        </form>
+        <br><br><br>
+    {% endfor %}
+    {% for drink in drinks %}
+        {{ drink }}
+        {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
+        <form action="{{ url_for('add_drink_to_cart') }}" method="post">
+            <label>
+                <input type="hidden" name="drink" value="{{ drink.id }}">
+            </label>
+            <button type="submit">Dodaj do koszyka</button>
+        </form>
+        <br>
         {% endif %}
-    </form>
-    <form action="http://localhost:5000/" method="get">
+    {% endfor %}
+    <!--</label>-->
+    <br>
+    {% if logged_in %}
+        <form action="{{ url_for('show_cart') }}" method="get">
+            <button class="close_button">przejdź do koszyka</button>
+        </form>
+    {% endif %}
+    <!--</form>-->
+    <form action="{{ url_for('index') }}" method="get">
         <button type="submit">powrót</button>
     </form>
 </body>
