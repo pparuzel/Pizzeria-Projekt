@@ -2,63 +2,117 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../static/style/style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/style/style.css">
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
     <title>Menu</title>
 </head>
 <body>
-    {% for pizza in pizzas %}
-        <form action="{{ url_for('add_to_cart') }}" , method="post">
-        {{ pizza }}
-        {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
-            <label>
-                <input type="number" name="{{ pizza.id }}" min="1" max="5" value="1">
-            </label>
-            <label>
-                <select name="select_size">
-                    <option value="small">Mała</option>
-                    <option value="medium">Średnia</option>
-                    <option value="large">Duża</option>
-                </select>
-            </label>
-            {% endif %}
-        <br>
-        <p>Dodatki: </p>
-        {% for topping in toppings %}
-            {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
-                <label>
-                    <input type="checkbox" name="check_group_topping" value="{{ topping.id }}">
-                </label>
-            {% endif %}
-            {{ topping }},
-        {% endfor %}
-        <br>
-            {% if logged_in %}
-                <button type="submit">Dodaj do koszyka</button>
-            {% endif %}
-        </form>
-        <br><br><br>
-    {% endfor %}
-    {% for drink in drinks %}
-        {{ drink }}
-        {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
-        <form action="{{ url_for('add_drink_to_cart') }}" method="post">
-            <label>
-                <input type="hidden" name="drink" value="{{ drink.id }}">
-            </label>
-            <button type="submit">Dodaj do koszyka</button>
-        </form>
-        <br>
-        {% endif %}
-    {% endfor %}
-    <!--</label>-->
-    <br>
+   <div id="container-menu" {% if not logged_in %} class="not-logged" {% endif %}>
+    <div id="container-inner">
+        <h2>Menu</h2>
+        <div id="selection-pizza">
+                <div id="show-pizza">
+                    {% for pizza in pizzas %}
+                    <form action="{{ url_for('add_to_cart') }}" , method="post">
+                    <div class="pizza">
+                        <div class="number-pizza"><span>
+                            <label>
+                                <input id="pizza{{pizza.id}}" type="number" name="{{ pizza.id }}" min="1" max="5" value="1">
+                            </label>
+                        </span></div>
+                        <div class="main-pizza">
+                            <div class="content-pizza">
+                                <h3>{{ pizza.name }}</h3>
+                                <div class="description-pizza">{{ pizza.ingredients }}</div>
+                                <div class="price-pizza">
+                                    <div class="small-price">Mała: <span>{{ pizza.price_small }}zł</span></div>
+                                    <div class="medium-price">Średnia: <span>{{ pizza.price_medium }}zł</span></div>
+                                    <div class="big-price">Duża: <span>{{ pizza.price_large }}zł</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="select-size-pizza">
+                           <h4>Wielkość:</h4>
+                            <label>
+                                <select name="select_size">
+                                    <option value="small">Mała</option>
+                                    <option value="medium">Średnia</option>
+                                    <option value="large">Duża</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="edit-pizza">
+                            <div class="edit-pizza-inner">
+                                <div class="add-pizza" onclick="add_amount({{pizza.id}})"><span>+</span></div>
+                                <div class="sub-pizza" onclick="sub_amount({{pizza.id}})"><span>-</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stop"></div>
+                    <div class="selection-addons">
+                        <p class="addon-header">Dodatki do <span>{{ pizza.name }}</span></p>
+                       {% for topping in toppings %}
+                       <label>
+                            <div class="addon">
+                                <div class="number-addon">
+                                        <input type="checkbox" name="check_group_topping" value="{{ topping.id }}">
+                                </div>
+                                <div class="main-addon">
+                                    <div class="description-addon">{{ topping.name }}</div>
+                                    <div class="price-addon">{{ topping.price }}zł</div>
+                                </div>
+                            </div>
+                        </label>
+                        {% endfor %}
+                        <div class="stop"></div>
+                    </div> 
+                    {% if logged_in %}
+                        <button class="basket" type="submit">Dodaj do koszyka</button>
+                    {% endif %}
+                    </form>
+                    <hr>
+                    {% endfor %}
+                </div>
+            <div class="stop"></div>
+        </div>
+
+        <div class="selection-addons drinks">
+            <p class="addon-header">Napoje</p>
+           {% for drink in drinks %}
+           <div class="wrapper-drink">
+           <form action="{{ url_for('add_drink_to_cart') }}" method="post">
+                    <div class="addon">
+                        <label>
+                            <input type="hidden" name="drink" value="{{ drink.id }}">
+                        </label>
+                        <div class="main-addon">
+                            <div class="description-addon">{{ drink.name }}</div>
+                            <div class="price-addon">{{ drink.price }}zł</div>
+                        </div>
+                    </div>
+                    <button class="basket" type="submit">Dodaj do koszyka</button>
+            </form>
+            </div>
+            {% endfor %}
+            <div class="stop"></div>
+        </div> 
+    
+    <hr>
+    <div class="menu-down">
     {% if logged_in %}
         <form action="{{ url_for('show_cart') }}" method="get">
-            <button class="close_button">przejdź do koszyka</button>
+            <button class="basket" class="close_button">przejdź do koszyka</button>
         </form>
     {% endif %}
-    <!--</form>-->
-    <form action="{{ url_for('index') }}" method="get">
-        <button type="submit">powrót</button>
-    </form>
+    
+    
+        <form action="{{ url_for('index') }}" method="get">
+            <button class="basket" type="submit">powrót</button>
+        </form>
+    </div>
+    </div>
+    </div>
 </body>
 </html>
