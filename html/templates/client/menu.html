@@ -10,7 +10,12 @@
             {% for pizza in pizzas %}
                 {{ pizza }}
                 {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
-                    <input type="checkbox" name="check_group_pizza" value="{{ pizza.id }}">
+                    <input type="number" name="{{ pizza.id }}" min="1" max="5">
+                    <select>
+                        <option value="small">Mała</option>
+                        <option value="medium">Średnia</option>
+                        <option value="large">Duża</option>
+                    </select>
                 {% endif %}
                 <br>
                 <p>Dodatki: </p>
@@ -33,9 +38,9 @@
         {% if logged_in %}
             <button class="close_button">zamów</button>
         {% endif %}
-        <form action="http://localhost:5000/" method="get">
-            <button>powrót</button>
-        </form>
+    </form>
+    <form action="http://localhost:5000/" method="get">
+        <button type="submit">powrót</button>
     </form>
 </body>
 </html>

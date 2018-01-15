@@ -99,8 +99,10 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
-    email = db.Column(db.String(320), nullable=False)
+    email = db.Column(db.String(320), nullable=False, unique=True)
     password = db.Column(db.String(320), nullable=False)
+    street = db.Column(db.String(70), nullable=False)
+    flat_nr = db.Column(db.String(12), nullable=False)
 
     def __repr__(self):
         return ', '.join([

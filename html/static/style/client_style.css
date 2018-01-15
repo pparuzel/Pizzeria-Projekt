@@ -7,22 +7,21 @@
     position: fixed;
     border: none;
     width: 50%;
-    height: 40%;
-    right: 0%;
-    top: 23%;
+    height: 30%;
+    right: 25%;
+    top: 25%;
 }
 
 #register {
     background-color: #2196F3;
-    display: inline-block;
     text-align: center;
     overflow: auto;
     position: fixed;
     border: none;
     width: 50%;
-    height: 60%;
-    right: 0%;
-    top: 15%;
+    height: 50%;
+    right: 25%;
+    top: 25%;
 }
 
 .popup-background {

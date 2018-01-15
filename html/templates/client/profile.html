@@ -21,33 +21,21 @@
                 <form action="http://localhost:5000/update_user" method="post">
                     <label>
                         imię:
-                        <input type="text">
+                        <input type="text" name="first_name">
                     </label>
                     <label>
                         nazwisko:
-                        <input type="text">
-                    </label>
-                    <label>
-                        email:
-                        <input type="text">
-                    </label>
-                    <label>
-                        telefon:
-                        <input type="text">
+                        <input type="text" name="last_name">
                     </label>
                     <label>
                         ulica:
-                        <input name="street" type="text">
+                        <input type="text" name="street">
                     </label>
                     <label>
                         nr lokalu:
-                        <input name="flat_nr" type="text">
+                        <input type="text" name="flat_nr">
                     </label>
-                    <label>
-                        miasto:
-                        <input name="city" type="text">
-                    </label>
-                    <button>zaktualizuj profil</button>
+                    <button type="submit">zaktualizuj profil</button>
                 </form>
                 <button onclick="close_popup_div(profile_div)">zamknij okno</button>
             </div>
@@ -60,18 +48,18 @@
 
         <div id="password_background" class="popup-background">
             <div id="password">
-                <form action="http://localhost:5000/verify_password" method="post">
+                <form action="http://localhost:5000/change_password" method="post">
                     <label>
                         podaj stare hasło:
-                        <input name="password" type="password">
+                        <input name="old_password" type="password">
                     </label>
                     <label>
                         hasło:
-                        <input name="password" type="password">
+                        <input name="new_password" type="password">
                       </label>
                       <label>
                         powtórz hasło:
-                        <input name="repeat_password" type="password">
+                        <input name="repeat_new_password" type="password">
                       </label>
                     <button onclick="close_popup_div(password_div)">Zatwierdź</button>
                 </form>
