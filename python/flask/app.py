@@ -16,16 +16,22 @@ db = SQLAlchemy(app)
 
 pizza_toppings_relationship = db.Table(
     'pizza_toppings_relationship',
-    db.Column('pizza', db.Integer, db.ForeignKey('pizza.id')),
-    db.Column('pizza_topping', db.Integer, db.ForeignKey('pizza_toppings.id'))
+    db.Column('pizza', db.Integer, db.ForeignKey('pizza.id'), nullable=False),
+    db.Column('pizza_topping', db.Integer, db.ForeignKey('pizza_toppings.id'), nullable=False)
 )
 
+order_pizza_relationship = db.Table(
+    'order_pizza_relationship',
+    db.Column('order', db.Integer, db.ForeignKey('order.id'), nullable=False),
+    db.Column('pizza', db.Integer, db.ForeignKey('pizza.id'), nullable=False),
+    db.Column('size', db.Enum('small', 'medium', 'large'), nullable=False),
+    db.Column('amount', db.Integer, nullable=False)
+)
 
-order_product_relationship = db.Table(
-    'order_product_relationship',
+order_drink_relationship = db.Table(
+    'order_drink_relationship',
     db.Column('order', db.Integer, db.ForeignKey('order.id')),
-    db.Column('pizza', db.Integer, db.ForeignKey('pizza.id')),
-    db.Column('drink', db.Integer, db.ForeignKey('drink.id')),
+    db.Column('drink', db.Integer, db.ForeignKey('drink.id'))
 )
 
 
@@ -71,7 +77,7 @@ class PizzaToppings(db.Model):
     price = db.Column(mysql.DECIMAL(precision=10, scale=2, unsigned=True), nullable=False)
 
     def __repr__(self):
-        return ', '.join([
+        return ' '.join([
             str(self.name),
             str(self.price)
         ])
@@ -118,14 +124,10 @@ class Order(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     date = db.Column(db.DateTime, nullable=False)
-
-    pizzas = db.relationship(
-        "Pizza",
-        secondary=order_product_relationship
-    )
+    # value = db.Column(mysql.INTEGER(unsigned=True), nullable=False)
 
     drinks = db.relationship(
         "Drink",
-        secondary=order_product_relationship
+        secondary=order_drink_relationship,
+        backref=db.backref('order_drink_relationship', lazy=True)
     )
-

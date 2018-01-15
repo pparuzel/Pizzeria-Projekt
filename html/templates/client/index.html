@@ -15,7 +15,7 @@
         <div id="logo"></div>
         <div id="main-menu">
           <div class="menu-block"><a href="">Pizzeria</a></div>
-          <div class="menu-block"><a href="http://localhost:5000/menu"">Menu</a></div>
+          <div class="menu-block"><a href="{{ url_for('show_menu') }}"">Menu</a></div>
           <div class="menu-block"><a href="">O nas</a></div>
           <div class="menu-block"><a href="">Kontakt</a></div>
           <div class="menu-block">
@@ -24,7 +24,7 @@
             {% endif %}
             <div id="register_background" class="popup-background">
               <div id="register">
-                <form action="http://localhost:5000/register" method="post">
+                <form action="{{ url_for('register') }}" method="post">
                   <label>
                     Imię:
                     <input type="text" name="first_name" placeholder="Imię...">
@@ -66,7 +66,7 @@
             {% endif %}
             <div id="login_background" style="display: none;">
               <div id="login" style="background-color: #2196F3">
-                <form action="http://localhost:5000/login" method="post">
+                <form action="{{ url_for('login') }}" method="post">
                   <label>
                     email:
                     <input type="text" name="email" placeholder="email...">
@@ -86,10 +86,10 @@
               var login_div = document.getElementById("login_background")
             </script>
             {% if logged_in %}
-            <form action="http://localhost:5000/profile" method="get">
+            <form action="{{url_for('user_profile') }}" method="get">
               <button type="submit">pokaż konto</button>
             </form>
-            <form action="http://localhost:5000/logout"  method="post">
+            <form action="{{ url_for('logout') }}"  method="post">
               <button type="submit">wyloguj</button>
             </form>
             {% endif %}
