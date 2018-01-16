@@ -15,7 +15,7 @@
         <div id="logo"></div>
         <div id="main-menu">
           <div class="menu-block"><a href="">Pizzeria</a></div>
-          <div class="menu-block"><a href="http://localhost:5000/menu">Menu</a></div>
+          <div class="menu-block"><a href="{{ url_for('show_menu') }}">Menu</a></div>
           <div class="menu-block"><a href="">O nas</a></div>
           <div class="menu-block"><a href="">Kontakt</a></div>
           <div class="menu-block">
@@ -54,8 +54,8 @@
                     <input type="text" name="flat_nr" placeholder="numer mieszkania...">
                   </label>
                   <button type="submit" onclick="close_popup_div(register_div)">utwórz konto</button>
-                  <button onclick="close_popup_div(register_div)">zamknij okno</button>
                 </form>
+                <button onclick="close_popup_div(register_div)">zamknij okno</button>
               </div>
             </div>
             <script>
@@ -77,9 +77,9 @@
                   </label>
                   <label>
                   <button type="submit" onclick="close_popup_div(login_div)">zaloguj</button>
-                  <button onclick="close_popup_div(login_div)">zamknij okno</button>
                   </label>
                 </form>
+                <button onclick="close_popup_div(login_div)">zamknij okno</button>
               </div>
             </div>
             <script>
