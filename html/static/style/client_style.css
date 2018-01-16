@@ -1,7 +1,11 @@
+body {
+  background-color: #efefef;
+  margin: 0;
+}
 /* guest */
 
 #login {
-    background-color: #2196F3;
+    background-color: #535353;
     text-align: center;
     overflow: auto;
     position: fixed;
@@ -10,10 +14,14 @@
     height: 30%;
     right: 25%;
     top: 25%;
+    z-index: 100;
+    border-radius: 10px 10px 200px 200px;
+    -moz-border-radius: 200px 200px 200px 200px;
+    -webkit-border-radius: 10px 10px 10px 10px;
 }
 
 #register {
-    background-color: #2196F3;
+    background-color: #535353;
     text-align: center;
     overflow: auto;
     position: fixed;
@@ -22,6 +30,18 @@
     height: 50%;
     right: 25%;
     top: 25%;
+    border-radius: 10px 10px 200px 200px;
+    -moz-border-radius: 200px 200px 200px 200px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+}
+
+#login, #register, #profile, #password {
+    font-size: 30px;
+    color: white;
+      font-family: Helvetica;
+      font-weight: bold;
+      color: white;
+      text-align: center;
 }
 
 .popup-background {
@@ -37,34 +57,40 @@
 /* user */
 
 #profile {
-    background-color: #2196F3;
+    background-color: #535353;
     text-align: center;
     overflow: auto;
     position: fixed;
     border: none;
     width: 50%;
     height: 40%;
-    right: 0%;
+    right: 25%;
     top: 25%;
+        border-radius: 10px 10px 200px 200px;
+    -moz-border-radius: 200px 200px 200px 200px;
+    -webkit-border-radius: 10px 10px 10px 10px;
 }
 
 #password {
-    background-color: #2196F3;
+    background-color: #535353;
     text-align: center;
     overflow: auto;
     position: fixed;
     border: none;
     width: 50%;
-    height: 25%;
-    right: 0%;
+    height: 30%;
+    right: 25%;
     top: 25%;
+        border-radius: 10px 10px 200px 200px;
+    -moz-border-radius: 200px 200px 200px 200px;
+    -webkit-border-radius: 10px 10px 10px 10px;
 }
 
 
 /* order */
 
 #address {
-    background-color: #2196F3;
+    background-color: #535353;
     text-align: center;
     overflow: auto;
     position: fixed;
@@ -91,4 +117,41 @@
 
 form label {
     display: block;
+}
+
+
+#container-info {
+    width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#container-info .button-profile {
+    background-color: #428BCA;
+    width: 330px;
+    height: 50px;
+    border: none;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    font-size: 21px;
+    color: white;
+    margin: 20px 0;
+}
+
+#container-info .button-profile.return {
+    width: 100%;
+}
+
+.button-menu {
+        background-color: #535353;
+    width: 130px;
+    height: 28px;
+    border: none;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    font-size: 15px;
+    color: white;
+    margin: 0px 0;
 }

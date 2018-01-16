@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../static/style/style.css">
     <link rel="stylesheet" type="text/css" href="../static/style/sliders.css">
+    <link rel="stylesheet" type="text/css" href="../static/style/client_style.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/client_style.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
     <title>Pizzeria Projekt</title>
@@ -20,63 +21,76 @@
           <div class="menu-block"><a href="">Kontakt</a></div>
           <div class="menu-block">
             {% if not logged_in %}
-              <button onclick="open_popup_div(register_div)">utwórz konto</button>
+              <button class="button-menu" onclick="open_popup_div(register_div)">utwórz konto</button>
             {% endif %}
             <div id="register_background" class="popup-background">
               <div id="register">
                 <form action="{{ url_for('register') }}" method="post">
                   <label>
-                    Imię:
-                    <input type="text" name="first_name" placeholder="Imię...">
+                    imię:
+                    <input type="text" required name="first_name" placeholder="imię...">
                   </label>
                   <label>
-                    Nazwisko:
-                    <input type="text" name="last_name" placeholder="Nazwisko...">
+                    nazwisko:
+                    <input type="text" required name="last_name" placeholder="nazwisko...">
                   </label>
                   <label>
                     email:
-                    <input type="text" name="email" placeholder="email...">
+                    <input type="email" required name="email" placeholder="email...">
                   </label>
                   <label>
                     hasło:
-                    <input type="password" name="password" placeholder="hasło...">
+                    <input type="password" required name="password" id="password-input" placeholder="hasło...">
                   </label>
                   <label>
-                    powtórz hasło
-                    <input type="password" name="password2" placeholder="powtórz hasło...">
+                    powtórz hasło:
+                    <input type="password" required name="password2" id="confirm_password" placeholder="powtórz hasło...">
                   </label>
                   <label>
-                    ulica
-                    <input type="text" name="street" placeholder="ulica...">
+                    ulica:
+                    <input type="text" required name="street" placeholder="ulica...">
                   </label>
                   <label>
-                    nr lokalu
-                    <input type="text" name="flat_nr" placeholder="numer mieszkania...">
+                    nr lokalu:
+                    <input type="text" required name="flat_nr" placeholder="numer mieszkania...">
                   </label>
-                  <button type="submit" onclick="close_popup_div(register_div)">utwórz konto</button>
+                  <button type="submit" onsubmit="close_popup_div(register_div)">utwórz konto</button>
                   <button onclick="close_popup_div(register_div)">zamknij okno</button>
                 </form>
               </div>
             </div>
             <script>
+                var password = document.getElementById("password-input")
+                  , confirm_password = document.getElementById("confirm_password");
+
+                function validatePassword(){
+                  if(password.value != confirm_password.value) {
+                    confirm_password.setCustomValidity("Hasła nie są takie same");
+                  } else {
+                    confirm_password.setCustomValidity('');
+                  }
+                }
+
+                password.onchange = validatePassword;
+                confirm_password.onkeyup = validatePassword;
               var register_div = document.getElementById("register_background")
             </script>
             {% if not logged_in %}
-              <button onclick="open_popup_div(login_div)">zaloguj</button>
+              <button class="button-menu"  onclick="open_popup_div(login_div)">zaloguj</button>
             {% endif %}
             <div id="login_background" style="display: none;">
-              <div id="login" style="background-color: #2196F3">
+              <div id="login">
                 <form action="{{ url_for('login') }}" method="post">
                   <label>
                     email:
-                    <input type="text" name="email" placeholder="email...">
+                    <input type="text" required name="email" placeholder="email...">
                   </label>
                   <label>
                     hasło:
-                    <input type="password" name="password" placeholder="hasło...">
+                    <input type="password" required name="password" placeholder="hasło...">
                   </label>
                   <label>
-                  <button type="submit" onclick="close_popup_div(login_div)">zaloguj</button>
+                  <button type="submit" onsubmit="close_popup_div(login_div)">zaloguj</button>
                   <button onclick="close_popup_div(login_div)">zamknij okno</button>
                   </label>
                 </form>
@@ -87,10 +101,10 @@
             </script>
             {% if logged_in %}
             <form action="{{url_for('user_profile') }}" method="get">
-              <button type="submit">pokaż konto</button>
+              <button class="button-menu"  type="submit">pokaż konto</button>
             </form>
             <form action="{{ url_for('logout') }}"  method="post">
-              <button type="submit">wyloguj</button>
+              <button class="button-menu"  type="submit">wyloguj</button>
             </form>
             {% endif %}
           </div>
