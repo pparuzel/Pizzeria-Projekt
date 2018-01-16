@@ -1,2 +1,5 @@
 # Photoshop project files
 psd/
+.idea
+*/__pycache__/
+*python/flask/__pycache__/
