@@ -3,3 +3,4 @@ psd/
 .idea
 */__pycache__/
 *python/flask/__pycache__/
+/venv/

@@ -4,74 +4,90 @@
     <meta charset="UTF-8">
     <title>Profile</title>
     <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="../../static/style/client_style.css">
+    <link rel="stylesheet" type="text/css" href="../static/style/client_style.css">
 </head>
 <body>
     <div>
-        <h2>Witaj</h2>
-        <h1>{{ username }}</h1>
-        <h3>Informacje o tobie</h3>
-        {% for data in user_info %}
-            <p>{{ data }}</p>
-        {% endfor %}
-        <button>Przeglądaj zamówienia</button>
-        <button onclick="open_popup_div(profile_div)">Edytuj dane osobowe</button>
-        <div id="profile_background" class="popup-background">
-            <div id="profile">
-                <form action="{{ url_for('update_user') }}" method="post">
-                    <label>
-                        imię:
-                        <input type="text" name="first_name">
-                    </label>
-                    <label>
-                        nazwisko:
-                        <input type="text" name="last_name">
-                    </label>
-                    <label>
-                        ulica:
-                        <input type="text" name="street">
-                    </label>
-                    <label>
-                        nr lokalu:
-                        <input type="text" name="flat_nr">
-                    </label>
-                    <button type="submit">zaktualizuj profil</button>
-                </form>
-                <button onclick="close_popup_div(profile_div)">zamknij okno</button>
-            </div>
-        </div>
-        <script>
-            var profile_div = document.getElementById("profile_background")
-        </script>
+       <div id="container-info">
+           <h1>Twój profil:</h1>
+            <h2>Witaj {{ username }}</h2>
+            <h3>Informacje o tobie</h3>
+            {% for data in user_info %}
+                <p>{{ data }}</p>
+            {% endfor %}
 
-        <button onclick="open_popup_div(password_div)">zmień hasło</button>
-
-        <div id="password_background" class="popup-background">
-            <div id="password">
-                <form action="{{ url_for('change_password') }}" method="post">
-                    <label>
-                        podaj stare hasło:
-                        <input name="old_password" type="password">
-                    </label>
-                    <label>
-                        hasło:
-                        <input name="new_password" type="password">
-                      </label>
-                      <label>
-                        powtórz hasło:
-                        <input name="repeat_new_password" type="password">
-                      </label>
-                    <button onclick="close_popup_div(password_div)">Zatwierdź</button>
-                </form>
-                <button onclick="close_popup_div(password_div)">zamknij okno</button>
+            <button class="button-profile">Przeglądaj zamówienia</button>
+            <button class="button-profile" onclick="open_popup_div(profile_div)">Edytuj dane osobowe</button>
+            <div id="profile_background" class="popup-background">
+                <div id="profile">
+                    <form action="{{ url_for('update_user') }}" method="post">
+                        <label>
+                            imię:
+                            <input required type="text" name="first_name">
+                        </label>
+                        <label>
+                            nazwisko:
+                            <input required type="text" name="last_name">
+                        </label>
+                        <label>
+                            ulica:
+                            <input required type="text" name="street">
+                        </label>
+                        <label>
+                            nr lokalu:
+                            <input required type="text" name="flat_nr">
+                        </label>
+                        <button type="submit">zaktualizuj profil</button>
+                    </form>
+                    <button onclick="close_popup_div(profile_div)">zamknij okno</button>
+                </div>
             </div>
+            <script>
+                var profile_div = document.getElementById("profile_background")
+            </script>
+
+            <button class="button-profile" onclick="open_popup_div(password_div)">zmień hasło</button>
+
+            <div id="password_background" class="popup-background">
+                <div id="password">
+                    <form action="{{ url_for('change_password') }}" method="post">
+                        <label>
+                            podaj stare hasło:
+                            <input required name="old_password" type="password">
+                        </label>
+                        <label>
+                            hasło:
+                            <input required name="new_password" type="password" id="password-input">
+                          </label>
+                          <label>
+                            powtórz hasło:
+                            <input required name="repeat_new_password" type="password" id="confirm_password">
+                          </label>
+                        <button onsubmit="close_popup_div(password_div)">Zatwierdź</button>
+                    </form>
+                    <button onclick="close_popup_div(password_div)">zamknij okno</button>
+                </div>
+            </div>
+            <script>
+                var password = document.getElementById("password-input")
+                  , confirm_password = document.getElementById("confirm_password");
+
+                function validatePassword(){
+                  if(password.value != confirm_password.value) {
+                    confirm_password.setCustomValidity("Hasła nie są takie same");
+                  } else {
+                    confirm_password.setCustomValidity('');
+                  }
+                }
+
+                password.onchange = validatePassword;
+                confirm_password.onkeyup = validatePassword;
+                var password_div = document.getElementById("password_background")
+            </script>
+            <form action="{{ url_for('index') }}" method="get">
+                <button class="button-profile return" >powrót do strony głównej</button>
+            </form>
         </div>
-        <script>
-            var password_div = document.getElementById("password_background")
-        </script>
-        <form action="{{ url_for('index') }}" method="get">
-            <button>powrót do strony głównej</button>
-        </form>
     </div>
 </body>
 </html>
