@@ -1,66 +1,77 @@
 # Strona internetowa pizzerii
 [**Link do strony GitHub-Pages**](https://goo.gl/5HAqbw "Pizzeria")  
 Autorzy: *Monika Wiech, Kamil Michno, Paweł Paruzel, Piotr Persona, Rafał Ziobro*
-  
+
 Spis Tresci
 ===========
 * [Opis problemu](#opis-problemu)
-* [Wymagania](#wymagania)
-* [Zagrożenia](#zagrożenia)
-* [Docelowy użytkownik](#docelowy-użytkownik)
+* [Technologie](#technologie)
+* [Instalacja](#Instalacja)
 * [Rozwiązanie problemu](#rozwiązanie-problemu)
 * [Narzędzia wykorzystane do realizacji interfejsu](#narzędzia-wykorzystane-do-realizacji-interfejsu)
-  
+
 ## Opis problemu
 
-W dzisiejszych czasach mimo łatwego dostępu do internetu klienci pizzerii nie zawsze mają możliwość złożenia zamówienia on-line oraz dokonaniu płatności przez internet. Czas składania zamówienia znacznie rośnie. Klient otrzymuje w informacji zwrotnej przewidywany czas dostawy kalkulowany przez człowieka, który może zostać błędnie oszacowany. Ponadto klient nie ma możliwości zaplanowania zamówienia na konkretną godzinę oraz monitorowania dostawy. 
-Wiele aplikacji umożliwiających złożenie zamówienia posiada nie sugestywny, nieczytelny interfejs o złym zagospodarowaniu przestrzeni. 
+W dzisiejszych czasach mimo łatwego dostępu do internetu klienci pizzerii nie zawsze mają możliwość złożenia zamówienia on-line oraz dokonaniu płatności przez internet. Czas składania zamówienia znacznie rośnie. Klient otrzymuje w informacji zwrotnej przewidywany czas dostawy kalkulowany przez człowieka, który może zostać błędnie oszacowany. Ponadto klient nie ma możliwości zaplanowania zamówienia na konkretną godzinę oraz monitorowania dostawy.
+Wiele aplikacji umożliwiających złożenie zamówienia posiada nie sugestywny, nieczytelny interfejs o złym zagospodarowaniu przestrzeni.
 
-## Wymagania
 
-* Możliwość złożenia zamówienia przez internet
-* Możliwość płatności online(karta)
-* Możliwość utworzenia konta użytkownika
-* Możliwość zalogowania do systemu
-* Przechowywanie  danych użytkownika
-* Przechowywanie danych odnośnie zamówień użytkownika
-* Możliwość modyfikacji danych personalnych użytkownika
-* Możliwość wybrania pizzy
-* Możliwość wybrania dodatków
-* Możliwość wybrania sosów i napojów
-* Możliwość sprawdzenia na jakim etapie jest dostawa pizzy
-* Możliwość płatności przy odbiorze
+## Technologie
 
-## Zagrożenia
+* python: Flask, Flask_Admin, SQLAlchemy
+* MySQL
+* JavaScript
+* HTML
+* CSS
 
-* Wprowadzenie niepoprawnej ilości danych (rejestracja)
-* Wprowadzenie niepoprawnych danych (rejestracja)
-* Wprowadzenie adresu poza obszarem usługi
-* Próba zalogowania się na niezarejestrowany adres
-* Wprowadzenie nieprawidłowego hasła
-* Wprowadzenie niepoprawnych danych podczas składania zamówienia (nr karty etc.)
-* Nie wybranie produktu
-* Brak informacji o zamówieniu pomimo zapłacenia
-* Błąd podczas płatności
-* Brak środków na koncie
-* Chęć zamówienia niedostępnego produktu
-* Zbyt długi czas dostawy
+## Instalacja
 
-## Docelowy użytkownik
+Należy zainstalować interpreter języka **Python** w wersji **3.6** oraz system zarządzania bazą danych **MySQL**.
 
-Przewidywanym użytkownikiem interfejsu jest osoba powyżej trzynastego roku życia. Wykształcenie oraz doświadczenie z aplikacją tego samego typu jest nie wymagane. Użytkownik musi obsługiwać podstawowe kontrolery zewnętrzne komputera: klawiaturę, mysz, ekran oraz potrafi obsługiwać przeglądarkę internetową. Przewidywanym środowiskiem użytkownika jest komputer z dostępem do internetu. Ponadto osoba korzystająca z interfejsu musi umieć czytać oraz pisać w języku polskim.  
-Role w systemie: 
-* Gość
-* Użytkownik
-* Pracownik pizzerii
+#### Mac OS X/Linux:
 
-## Rozwiązanie problemu
+1. (opcjonalne) Pobranie narzędzia virtualenv: [virtualenv](https://virtualenv.pypa.io/en/stable/installation/)
 
-Aplikacja będzie oferować czytelny, przejrzysty oraz przyjemny dla użytkownika interfejs realizowany częściowo w stylu manipulacyjnym. Zostanie położony nacisk na prostotę w odbiorze oraz użytkowaniu interfejsu. Użytkownik będzie miał możliwość złożenia zamówienia przez internet, z wyborem sposobu płatności: on-line lub przy odbiorze.  
-Interfejs oferuje powiadomienie użytkownika o statusie zamówienia oraz możliwość monitorowania zamówienia.  
+2. Utworzenie wirtualnego środowiska Pythona:
 
-## Narzędzia wykorzystane do realizacji interfejsu
+        mkvirtualenv pizzera-projekt -p python3
 
-Graficzny interfejs użytkownika zostanie zrealizowany za pomocą przeglądarki internetowej oraz języków służących do tworzenia i stylizowania strony internetowej: **HTML**, **CSS**.  
-Symulacja serwera, odpowiedzialna za obsługę zapytań użytkowników oraz odpowiedzi zostanie zrealizowana za pomocą języka **Python 3**.  
-Dane przechowywane w aplikacji będą obsługiwane przez bazę danych **MySQL**.  
+ pizzeria-projekt to nazwa wirtualnego środowiska.
+
+3. Następnie należy przejść do folderu Pizzeria-Projekt i wykonać komendy:
+
+        workon pizzera-projekt
+
+ Zmienia domyślne środowisko na wirtualne środowisko
+
+        pip install -r requirements.txt
+
+ Instaluje potrzebne moduły wymienione w pliku **requirements.txt.**
+
+4. Następnie należy utworzyć bazę danych przy pomocy skryptu:
+
+        create_database.sql
+
+5. W pliku: Pizzeria-Projekt/python/flask/app.py należy wpisać:
+
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://USERNAME:PASSWORD@localhost/Pizzeria?charset=utf8'
+
+ W miejscu **USERNAME** - nazwę użytkownika w bazie danych
+
+ W miejscu **PASSWORD** - hasło dostępu do bazy danych
+
+ Domyślnie ustawiono username: **root** oraz hasło: **root**.
+
+6. Znajdując się w katalogu Pizzeria-Projekt wykonać komendę uruchamiającą serwer na adresie ('localhost', port=5000):
+
+        python server.py
+
+7. Wpisać w przeglądarkę adres administratora zarządzania pizzerią:
+
+        http://localhost:5000/admin
+
+ Z tego panelu możliwe jest tworzenie rekordów w bazie danych oraz przeglądanie historii zamówień.
+
+8. Panel klienta pizzerii dostępny jest pod adresem:
+
+        http://localhost:5000/
