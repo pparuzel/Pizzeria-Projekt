@@ -19,7 +19,7 @@
             <button class="button-profile">Przeglądaj zamówienia</button>
             <button class="button-profile" onclick="open_popup_div(profile_div)">Edytuj dane osobowe</button>
             <div id="profile_background" class="popup-background">
-                <div id="profile" class="popup-div">
+                <div id="profile">
                     <form action="{{ url_for('update_user') }}" method="post">
                         <label>
                             imię:
@@ -49,7 +49,7 @@
             <button class="button-profile" onclick="open_popup_div(password_div)">zmień hasło</button>
 
             <div id="password_background" class="popup-background">
-                <div id="password" class="popup-div">
+                <div id="password">
                     <form action="{{ url_for('change_password') }}" method="post">
                         <label>
                             podaj stare hasło:

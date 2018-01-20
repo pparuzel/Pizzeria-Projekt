@@ -7,9 +7,6 @@
     <link rel="stylesheet" type="text/css" href="../static/style/sliders.css">
     <link rel="stylesheet" type="text/css" href="../static/style/client_style.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/client_style.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
     <title>Pizzeria Projekt</title>
   </head>
@@ -26,9 +23,82 @@
             {% if not logged_in %}
               <button class="button-menu" onclick="open_popup_div(register_div)">utwórz konto</button>
             {% endif %}
+            <div id="register_background" class="popup-background">
+              <div id="register">
+                <form action="{{ url_for('register') }}" method="post">
+                  <label>
+                    imię:
+                    <input type="text" required name="first_name" placeholder="imię...">
+                  </label>
+                  <label>
+                    nazwisko:
+                    <input type="text" required name="last_name" placeholder="nazwisko...">
+                  </label>
+                  <label>
+                    email:
+                    <input type="email" required name="email" placeholder="email...">
+                  </label>
+                  <label>
+                    hasło:
+                    <input type="password" required name="password" id="password-input" placeholder="hasło...">
+                  </label>
+                  <label>
+                    powtórz hasło:
+                    <input type="password" required name="password2" id="confirm_password" placeholder="powtórz hasło...">
+                  </label>
+                  <label>
+                    ulica:
+                    <input type="text" required name="street" placeholder="ulica...">
+                  </label>
+                  <label>
+                    nr lokalu:
+                    <input type="text" required name="flat_nr" placeholder="numer mieszkania...">
+                  </label>
+                  <button type="submit" onclick="close_popup_div(register_div)">utwórz konto</button>
+                </form>
+                <button onclick="close_popup_div(register_div)">zamknij okno</button>
+              </div>
+            </div>
+            <script>
+                var password = document.getElementById("password-input")
+                  , confirm_password = document.getElementById("confirm_password");
+
+                function validatePassword(){
+                  if(password.value != confirm_password.value) {
+                    confirm_password.setCustomValidity("Hasła nie są takie same");
+                  } else {
+                    confirm_password.setCustomValidity('');
+                  }
+                }
+
+                password.onchange = validatePassword;
+                confirm_password.onkeyup = validatePassword;
+              var register_div = document.getElementById("register_background")
+            </script>
             {% if not logged_in %}
               <button class="button-menu"  onclick="open_popup_div(login_div)">zaloguj</button>
             {% endif %}
+            <div id="login_background" style="display: none;">
+              <div id="login">
+                <form action="{{ url_for('login') }}" method="post">
+                  <label>
+                    email:
+                    <input type="text" required name="email" placeholder="email...">
+                  </label>
+                  <label>
+                    hasło:
+                    <input type="password" required name="password" placeholder="hasło...">
+                  </label>
+                  <label>
+                  <button type="submit" onclick="close_popup_div(login_div)">zaloguj</button>
+                  </label>
+                </form>
+                <button onclick="close_popup_div(login_div)">zamknij okno</button>
+              </div>
+            </div>
+            <script>
+              var login_div = document.getElementById("login_background")
+            </script>
             {% if logged_in %}
             <form action="{{url_for('user_profile') }}" method="get">
               <button class="button-menu"  type="submit">pokaż konto</button>
@@ -50,115 +120,7 @@
           <div id="largen"></div>
           </label>
         </div>
-        <div id="register_background" class="popup-background">
-          <div id="register" class="popup-div">
-            <form action="{{ url_for('register') }}" method="post" class="form-horizontal">
-              <div class="form-group">
-                <label class="control-label col-sm-2">
-                  imię:
-                </label>
-                <div class="col-sm-10">
-                  <input class="form-control"  type="text" required name="first_name" placeholder="imię...">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">
-                  nazwisko:
-                </label>
-                <div class="col-sm-10">
-                  <input class="form-control" type="text" required name="last_name" placeholder="nazwisko...">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">
-                  email:
-                </label>
-                <div class="col-sm-10">
-                  <input class="form-control" type="email" required name="email" placeholder="email...">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">
-                  hasło:
-                </label>
-                <div class="col-sm-10">
-                  <input class="form-control" type="password" required name="password" id="password-input" placeholder="hasło...">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">
-                  powtórz hasło:
-                </label>
-                <div class="col-sm-10">
-                  <input class="form-control"  type="password" required name="password2" id="confirm_password" placeholder="powtórz hasło...">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">
-                  ulica:
-                </label>
-                <div class="col-sm-10">
-                  <input class="form-control" type="text" required name="street" placeholder="ulica...">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">
-                  nr lokalu:
-                </label>
-                <div class="col-sm-10">
-                  <input class="form-control" type="text" required name="flat_nr" placeholder="numer mieszkania...">
-                </div>
-              </div>
-              <button type="submit" onclick="close_popup_div(register_div)">utwórz konto</button>
-            </form>
-            <button onclick="close_popup_div(register_div)">zamknij okno</button>
-          </div>
-        </div>
-        <script>
-            var password = document.getElementById("password-input")
-              , confirm_password = document.getElementById("confirm_password");
-
-            function validatePassword(){
-              if(password.value != confirm_password.value) {
-                confirm_password.setCustomValidity("Hasła nie są takie same");
-              } else {
-                confirm_password.setCustomValidity('');
-              }
-            }
-
-            password.onchange = validatePassword;
-            confirm_password.onkeyup = validatePassword;
-          var register_div = document.getElementById("register_background")
-        </script>
-        <div id="login_background" class="popup-background">
-          <div id="login" class="popup-div">
-            <form action="{{ url_for('login') }}" method="post" class="form-horizontal">
-              <div class="form-group">
-                <label class="control-label col-sm-2">
-                  email:
-                </label>
-                <div class="col-sm-10">
-                  <input class="form-control" type="email" required name="email" placeholder="email...">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2">
-                  hasło:
-                </label>
-                <div class="col-sm-10">
-                  <input class="form-control" type="password" required name="password" placeholder="hasło...">
-                </div>
-              </div>
-              <label>
-              <button type="submit" onclick="close_popup_div(login_div)">zaloguj</button>
-              </label>
-            </form>
-            <button onclick="close_popup_div(login_div)">zamknij okno</button>
-          </div>
-        </div>
-        <script>
-          var login_div = document.getElementById("login_background")
-        </script>
       </div>
+    </div>
   </body>
 </html>
