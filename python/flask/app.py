@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import mysql
+from sqlalchemy.sql import select
 
 app = Flask(__name__)
 app.static_folder = '../../html/static'
@@ -14,14 +15,9 @@ app.config['SECRET_KEY'] = os.urandom(32)
 db = SQLAlchemy(app)
 
 
-pizza_toppings_relationship = db.Table(
-    'pizza_toppings_relationship',
-    db.Column('pizza', db.Integer, db.ForeignKey('pizza.id'), nullable=False),
-    db.Column('pizza_topping', db.Integer, db.ForeignKey('pizza_toppings.id'), nullable=False)
-)
-
 order_pizza_relationship = db.Table(
     'order_pizza_relationship',
+    db.Column('id', mysql.INTEGER(unsigned=True), primary_key=True, autoincrement=True, nullable=False),
     db.Column('order', db.Integer, db.ForeignKey('order.id'), nullable=False),
     db.Column('pizza', db.Integer, db.ForeignKey('pizza.id'), nullable=False),
     db.Column('size', db.Enum('small', 'medium', 'large'), nullable=False),
@@ -33,7 +29,6 @@ order_drink_relationship = db.Table(
     db.Column('order', db.Integer, db.ForeignKey('order.id')),
     db.Column('drink', db.Integer, db.ForeignKey('drink.id'))
 )
-
 
 # entities
 
@@ -68,9 +63,9 @@ class Pizza(db.Model):
         ])
 
 
-class PizzaToppings(db.Model):
+class Topping(db.Model):
 
-    __tablename__ = 'pizza_toppings'
+    __tablename__ = 'topping'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(30), nullable=False)
@@ -110,6 +105,12 @@ class User(db.Model):
     street = db.Column(db.String(70), nullable=False)
     flat_nr = db.Column(db.String(12), nullable=False)
 
+    orders = db.relationship(
+        'Order',
+        backref='user',
+        lazy='dynamic'
+    )
+
     def __repr__(self):
         return ', '.join([
             str(self.first_name),
@@ -124,10 +125,40 @@ class Order(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     date = db.Column(db.DateTime, nullable=False)
-    # value = db.Column(mysql.INTEGER(unsigned=True), nullable=False)
+    status = db.Column(mysql.ENUM('waiting', 'paid', 'rejected'), nullable=False, default='waiting')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    pizzas = db.relationship(
+        'Pizza',
+        secondary='order_pizza_relationship',
+    )
 
     drinks = db.relationship(
-        "Drink",
-        secondary=order_drink_relationship,
-        backref=db.backref('order_drink_relationship', lazy=True)
+        'Drink',
+        secondary=order_drink_relationship
     )
+
+    @property
+    def order_value(self):
+        pizzas_value = 0
+        target = order_pizza_relationship
+        select_query = select([
+            target
+        ]).where(target.c.order == self.id)
+        query_result = db.engine.execute(select_query)
+
+        for data in query_result:
+            pizza_id = data[2]
+            pizza_size = data[3]
+            amount = data[4]
+            pizza = Pizza.query.get(pizza_id)
+            if pizza_size == 'small':
+                pizzas_value += amount * pizza.price_small
+            elif pizza_size == 'medium':
+                pizzas_value += amount * pizza.price_medium
+            elif pizza_size == 'large':
+                pizzas_value += amount * pizza.price_large
+
+        drinks_value = sum(drink.price for drink in self.drinks)
+        value = pizzas_value + drinks_value
+        return value
