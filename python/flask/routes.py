@@ -2,8 +2,8 @@ from flask import redirect, render_template, url_for, request
 
 from python.flask.app import app
 from python.flask.app import db
-from python.flask.app import PizzaToppings, Order, Drink, User, Pizza
-from python.flask.app import order_pizza_relationship, pizza_toppings_relationship, order_drink_relationship
+from python.flask.app import Topping, Order, Drink, User, Pizza
+from python.flask.app import order_drink_relationship, order_pizza_relationship
 from flask_admin import Admin as FlaskAdmin
 from flask_admin.contrib.sqla import ModelView
 from flask import session as session_handler
@@ -81,7 +81,7 @@ def register():
 @app.route('/menu', methods=['GET'])
 def show_menu():
     pizzas = Pizza.query.all()
-    toppings = PizzaToppings.query.all()
+    toppings = Topping.query.all()
     drinks = Drink.query.all()
     if request.method == 'GET':
         is_logged_in = 'email' in session_handler
@@ -130,10 +130,12 @@ def add_to_cart():
         toppings = [int(topping_id) for topping_id in selected_toppings]
 
         cart_pos = {
-            'pizza_id': selected_pizza,
-            'pizza_size': pizza_size,
-            'amount': amount_of_pizza,
-            'toppings': toppings
+            'pizza': {
+                'pizza_id': selected_pizza,
+                'pizza_size': pizza_size,
+                'amount': amount_of_pizza,
+                'toppings': toppings
+            }
         }
 
         user_email = session_handler['email'][0]
@@ -170,7 +172,7 @@ def show_cart():
     if request.method == 'GET':
         user_email = session_handler['email'][0]
         user_shopping_cart = shopping_cart[user_email]
-        return render_template('client/cart.html', cart=shopping_cart[session_handler['email'][0]])
+        return render_template('client/cart.html', cart=user_shopping_cart)
 
 
 @app.route('/change_order_address', methods=['POST', 'GET'])
@@ -185,11 +187,34 @@ def make_order():
         from datetime import datetime
         # put order into DB
         user_email = session_handler['email'][0]
+        user_id = session_handler['email'][1]
+        user = User.query.get(user_id)
+        order = Order(date=datetime.now(), user=user, status='waiting')
+        db.session.add(order)
+        db.session.commit()
         cart = shopping_cart[user_email]
-        print(cart)
-        order = Order(date=datetime.now())
+        for product in cart:
+            for product_name, product_content in product.items():
+                if product_name == 'pizza':
+                    pizza_id = int(product_content['pizza_id'])
+                    selected_pizza = Pizza.query.get(pizza_id)
 
+                    insert_pizza_info = order_pizza_relationship.insert().values(
+                        order=order.id,
+                        pizza=selected_pizza.id,
+                        size=product_content['pizza_size'],
+                        amount=int(product_content['amount'])
+                    )
+                    db.engine.execute(insert_pizza_info)
+                    db.session.commit()
+                if product_name == 'drink':
+                    drink_id = int(product_content)
+                    selected_drink = Drink.query.get(drink_id)
+                    order.drinks.append(selected_drink)
+                    db.session.commit()
 
+        print(order.pizzas)
+        shopping_cart.pop(user_email)
         return redirect(url_for('index'))
 
 
@@ -304,14 +329,16 @@ class OrderView(ModelView):
 
     can_create = False
     can_edit = True
-    can_delete = True
+    can_delete = False
+
+    column_list = ('date', 'status', 'user', 'pizzas', 'drinks', 'order_value')
 
 
 def setup_admin_view():
     admin = FlaskAdmin(app, name='pizzeria-admin', template_mode='bootstrap3', url='/admin')
 
     pizza_view = PizzaView(Pizza, db.session)
-    pizza_toppings_view = PizzaToppingsView(PizzaToppings, db.session)
+    pizza_toppings_view = PizzaToppingsView(Topping, db.session)
     drink_view = DrinkView(Drink, db.session)
     user_view = UserView(User, db.session)
     order_view = OrderView(Order, db.session)

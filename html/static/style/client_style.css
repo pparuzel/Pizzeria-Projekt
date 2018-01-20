@@ -5,7 +5,7 @@ body {
 /* guest */
 
 #login {
-    background-color: #535353;
+    /* background-color: #535353;
     text-align: center;
     overflow: auto;
     position: fixed;
@@ -17,24 +17,27 @@ body {
     z-index: 100;
     border-radius: 10px 10px 200px 200px;
     -moz-border-radius: 200px 200px 200px 200px;
-    -webkit-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px; */
 }
 
 #register {
-    background-color: #535353;
+    /* background-color: #535353;
     text-align: center;
     overflow: auto;
     position: fixed;
     border: none;
-    width: 50%;
+    /* width: 50%;
     height: 50%;
     right: 25%;
-    top: 25%;
+    top: 25%; */
+    /* padding: 20px;
+    display: inline-block;
     border-radius: 10px 10px 200px 200px;
     -moz-border-radius: 200px 200px 200px 200px;
-    -webkit-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px; */
 }
 
+/*
 #login, #register, #profile, #password {
     font-size: 30px;
     color: white;
@@ -42,7 +45,7 @@ body {
       font-weight: bold;
       color: white;
       text-align: center;
-}
+} */
 
 .popup-background {
     display: none;
@@ -54,10 +57,31 @@ body {
     height: 100%;
 }
 
+.popup-div {
+    background-color: #535353;
+    text-align: center;
+    overflow: auto;
+    position: fixed;
+    border: none;
+    padding: 20px;
+    display: inline-block;
+    border-radius: 10px 10px 200px 200px;
+    -moz-border-radius: 200px 200px 200px 200px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+}
+
+.label-form label {
+    text-align: left;
+}
+
+/* .label-form input {
+
+} */
+
 /* user */
 
 #profile {
-    background-color: #535353;
+    /* background-color: #535353;
     text-align: center;
     overflow: auto;
     position: fixed;
@@ -68,11 +92,11 @@ body {
     top: 25%;
         border-radius: 10px 10px 200px 200px;
     -moz-border-radius: 200px 200px 200px 200px;
-    -webkit-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px; */
 }
 
 #password {
-    background-color: #535353;
+    /* background-color: #535353;
     text-align: center;
     overflow: auto;
     position: fixed;
@@ -83,7 +107,7 @@ body {
     top: 25%;
         border-radius: 10px 10px 200px 200px;
     -moz-border-radius: 200px 200px 200px 200px;
-    -webkit-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px; */
 }
 
 

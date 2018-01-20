@@ -7,8 +7,7 @@ Spis Tresci
 * [Opis problemu](#opis-problemu)
 * [Technologie](#technologie)
 * [Instalacja](#Instalacja)
-* [Rozwiązanie problemu](#rozwiązanie-problemu)
-* [Narzędzia wykorzystane do realizacji interfejsu](#narzędzia-wykorzystane-do-realizacji-interfejsu)
+
 
 ## Opis problemu
 
