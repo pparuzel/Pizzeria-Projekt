@@ -17,7 +17,8 @@ db = SQLAlchemy(app)
 
 order_pizza_relationship = db.Table(
     'order_pizza_relationship',
-    db.Column('id', mysql.INTEGER(unsigned=True), primary_key=True, autoincrement=True, nullable=False),
+    db.Column('id', mysql.INTEGER(unsigned=True), primary_key=True,
+              autoincrement=True, nullable=False),
     db.Column('order', db.Integer, db.ForeignKey('order.id'), nullable=False),
     db.Column('pizza', db.Integer, db.ForeignKey('pizza.id'), nullable=False),
     db.Column('size', db.Enum('small', 'medium', 'large'), nullable=False),
@@ -31,6 +32,7 @@ order_drink_relationship = db.Table(
 )
 
 # entities
+
 
 class PizzeriaAdmin(db.Model):
 
@@ -54,13 +56,13 @@ class Pizza(db.Model):
     valid = db.Column(mysql.BOOLEAN(create_constraint=True), default=True, nullable=False)
 
     def __repr__(self):
-        return ', '.join([
+        return "{}\n{}\nCena: {}/{}/{}".format(
             str(self.name),
             str(self.ingredients),
             str(self.price_small),
             str(self.price_medium),
             str(self.price_large)
-        ])
+        )
 
 
 class Topping(db.Model):
@@ -130,7 +132,7 @@ class Order(db.Model):
 
     pizzas = db.relationship(
         'Pizza',
-        secondary='order_pizza_relationship',
+        secondary=order_pizza_relationship
     )
 
     drinks = db.relationship(

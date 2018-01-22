@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../static/style/style.css">
-    <link rel="stylesheet" type="text/css" href="../static/style/sliders.css">
     <link rel="stylesheet" type="text/css" href="../static/style/client_style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/style/pawp.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/client_style.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
     <title>Pizzeria Projekt</title>
@@ -15,17 +15,18 @@
       <div id="upper-strip">
         <div id="logo"></div>
         <div id="main-menu">
-          <div class="menu-block"><a href="">Pizzeria</a></div>
+          <div class="menu-block"><a href="">Strona główna</a></div>
           <div class="menu-block"><a href="{{ url_for('show_menu') }}">Menu</a></div>
-          <div class="menu-block"><a href="">O nas</a></div>
           <div class="menu-block"><a href="">Kontakt</a></div>
           <div class="menu-block">
             {% if not logged_in %}
+            <div>
               <button class="button-menu" onclick="open_popup_div(register_div)">utwórz konto</button>
+            </div>
             {% endif %}
             <div id="register_background" class="popup-background">
               <div id="register">
-                <form action="{{ url_for('register') }}" method="post">
+                <form class="nice_form" action="{{ url_for('register') }}" method="post">
                   <label>
                     imię:
                     <input type="text" required name="first_name" placeholder="imię...">
@@ -54,9 +55,9 @@
                     nr lokalu:
                     <input type="text" required name="flat_nr" placeholder="numer mieszkania...">
                   </label>
-                  <button type="submit" onclick="close_popup_div(register_div)">utwórz konto</button>
+                  <button type="submit" class="nice_button" onclick="close_popup_div(register_div)">utwórz konto</button>
                 </form>
-                <button onclick="close_popup_div(register_div)">zamknij okno</button>
+                <button class="nice_button" onclick="close_popup_div(register_div)">zamknij okno</button>
               </div>
             </div>
             <script>
@@ -80,7 +81,7 @@
             {% endif %}
             <div id="login_background" style="display: none;">
               <div id="login">
-                <form action="{{ url_for('login') }}" method="post">
+                <form class="nice_form" action="{{ url_for('login') }}" method="post">
                   <label>
                     email:
                     <input type="text" required name="email" placeholder="email...">
@@ -92,8 +93,9 @@
                   <label>
                   <button type="submit" onclick="close_popup_div(login_div)">zaloguj</button>
                   </label>
+
+                  <button class="nice_button" onclick="close_popup_div(login_div)">zamknij okno</button>
                 </form>
-                <button onclick="close_popup_div(login_div)">zamknij okno</button>
               </div>
             </div>
             <script>
@@ -112,13 +114,13 @@
         </div>
       </div>
       <div id="context">
-        <div class="scroll-turn-on">
-          Kliknij aby umożliwić scroll'owanie strony
-          <label for="select1" class="switch">
-          <input id="select1" type="checkbox">
-          <span class="slider round"></span>
-          <div id="largen"></div>
-          </label>
+        <div id="big_pizza">
+          <div id="news_tab">
+            <h1>Promocje</h1>
+            <h2>Zamów pizzę, druga gratis!</h2>
+            <p>Tylko <i>dziś</i>! Dwie pizze w cenie <b>TAŃSZEJ</b>.</p>
+            <p>Nie zwlekaj, zamów teraz!</p>
+          </div>
         </div>
       </div>
     </div>

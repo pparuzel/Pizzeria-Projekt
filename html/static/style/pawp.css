@@ -1,0 +1,20 @@
+.nice_button {
+  background-color: #2d2d2d;
+  border: none;
+  color: white;
+  padding: 7px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+}
+
+#menu_context {
+  position: relative;
+  top: 100px;
+  left: 200px;
+  width: 400px;
+  border-radius: 25px;
+  background-color: rgba(68, 68, 68, 0.6);
+  color: white;
+}
