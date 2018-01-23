@@ -5,13 +5,14 @@
     <title>Profile</title>
     <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="../static/style/client_style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/style/pawp.css">
 </head>
-<body>
+<body id="profile_body">
     <div>
        <div id="container-info">
            <h1>Twój profil:</h1>
-            <h2>Witaj {{ username }}</h2>
-            <h3>Informacje o tobie</h3>
+            <h2>Witaj, {{ username }}!</h2>
+            <h3>Informacje o Tobie</h3>
             {% for data in user_info %}
                 <p>{{ data }}</p>
             {% endfor %}
@@ -37,9 +38,9 @@
                             nr lokalu:
                             <input required type="text" name="flat_nr">
                         </label>
-                        <button type="submit">zaktualizuj profil</button>
+                        <button class="nice_button" type="submit">zaktualizuj profil</button>
                     </form>
-                    <button onclick="close_popup_div(profile_div)">zamknij okno</button>
+                    <button class="nice_button" onclick="close_popup_div(profile_div)">zamknij okno</button>
                 </div>
             </div>
             <script>
@@ -50,7 +51,7 @@
 
             <div id="password_background" class="popup-background">
                 <div id="password">
-                    <form action="{{ url_for('change_password') }}" method="post">
+                    <form class="nice_form" action="{{ url_for('change_password') }}" method="post">
                         <label>
                             podaj stare hasło:
                             <input required name="old_password" type="password">
@@ -63,9 +64,9 @@
                             powtórz hasło:
                             <input required name="repeat_new_password" type="password" id="confirm_password">
                           </label>
-                        <button onsubmit="close_popup_div(password_div)">Zatwierdź</button>
+                        <button class="nice_button" onsubmit="close_popup_div(password_div)">Zatwierdź</button>
                     </form>
-                    <button onclick="close_popup_div(password_div)">zamknij okno</button>
+                    <button class="nice_button" onclick="close_popup_div(password_div)">Zamknij okno</button>
                 </div>
             </div>
             <script>

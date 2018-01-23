@@ -27,9 +27,9 @@ body {
     position: fixed;
     border: none;
     width: 50%;
-    height: 50%;
+    padding: 20px;
     right: 25%;
-    top: 25%;
+    top: 18%;
     border-radius: 10px 10px 200px 200px;
     -moz-border-radius: 200px 200px 200px 200px;
     -webkit-border-radius: 10px 10px 10px 10px;
@@ -38,10 +38,10 @@ body {
 #login, #register, #profile, #password {
     font-size: 30px;
     color: white;
-      font-family: Helvetica;
-      font-weight: bold;
-      color: white;
-      text-align: center;
+    font-family: Helvetica;
+    font-weight: bold;
+    color: white;
+    text-align: center;
 }
 
 .popup-background {
@@ -58,7 +58,6 @@ body {
 
 #profile {
     background-color: #535353;
-    text-align: center;
     overflow: auto;
     position: fixed;
     border: none;
@@ -66,9 +65,15 @@ body {
     height: 40%;
     right: 25%;
     top: 25%;
-        border-radius: 10px 10px 200px 200px;
+    border-radius: 10px 10px 200px 200px;
     -moz-border-radius: 200px 200px 200px 200px;
     -webkit-border-radius: 10px 10px 10px 10px;
+}
+
+#profile_body {
+  background-size: cover;
+  background-image: url("/static/images/pizzabig_dark.jpg");
+  color: white;
 }
 
 #password {
@@ -123,7 +128,7 @@ form label {
 #container-info {
     width: 1000px;
     margin: 0 auto;
-    text-align: center;
+    text-align: left;
 }
 
 #container-info .button-profile {
@@ -144,7 +149,7 @@ form label {
 }
 
 .button-menu {
-        background-color: #535353;
+    background-color: #535353;
     width: 130px;
     height: 28px;
     border: none;

@@ -1,25 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../static/style/style.css">
-    <link rel="stylesheet" type="text/css" href="../../static/style/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/style/client_style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/style/pawp.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/client_style.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='javascript/main.js') }}"></script>
     <title>Menu</title>
-</head>
-<body>
+  </head>
+  <body style="font-family: Arial;">
+    <div id="content">
+      <div id="upper-strip">
+        <div id="logo"></div>
+        <div id="main-menu">
+          <div class="menu-block"><a href="">Strona główna</a></div>
+          <div class="menu-block"><a href="{{ url_for('show_menu') }}">Menu</a></div>
+          <div class="menu-block"><a href="">Kontakt</a></div>
+          <div class="menu-block">
+            {% if not logged_in %}
+            <div>
+              <button class="button-menu" onclick="open_popup_div(register_div)">utwórz konto</button>
+            </div>
+            {% endif %}
+            <div id="register_background" class="popup-background">
+              <div id="register">
+                <form class="nice_form" action="{{ url_for('register') }}" method="post">
+                  <label>
+                    imię:
+                    <input type="text" required name="first_name" placeholder="imię...">
+                  </label>
+                  <label>
+                    nazwisko:
+                    <input type="text" required name="last_name" placeholder="nazwisko...">
+                  </label>
+                  <label>
+                    email:
+                    <input type="email" required name="email" placeholder="email...">
+                  </label>
+                  <label>
+                    hasło:
+                    <input type="password" required name="password" id="password-input" placeholder="hasło...">
+                  </label>
+                  <label>
+                    powtórz hasło:
+                    <input type="password" required name="password2" id="confirm_password" placeholder="powtórz hasło...">
+                  </label>
+                  <label>
+                    ulica:
+                    <input type="text" required name="street" placeholder="ulica...">
+                  </label>
+                  <label>
+                    nr lokalu:
+                    <input type="text" required name="flat_nr" placeholder="numer mieszkania...">
+                  </label>
+                  <button type="submit" class="nice_button" onclick="close_popup_div(register_div)">utwórz konto</button>
+                </form>
+                <button class="nice_button" onclick="close_popup_div(register_div)">zamknij okno</button>
+              </div>
+            </div>
+            <script>
+                var password = document.getElementById("password-input")
+                  , confirm_password = document.getElementById("confirm_password");
+
+                function validatePassword(){
+                  if(password.value != confirm_password.value) {
+                    confirm_password.setCustomValidity("Hasła nie są takie same");
+                  } else {
+                    confirm_password.setCustomValidity('');
+                  }
+                }
+
+                password.onchange = validatePassword;
+                confirm_password.onkeyup = validatePassword;
+              var register_div = document.getElementById("register_background")
+            </script>
+            {% if not logged_in %}
+              <button class="button-menu"  onclick="open_popup_div(login_div)">zaloguj</button>
+            {% endif %}
+            <div id="login_background" style="display: none;">
+              <div id="login">
+                <form class="nice_form" action="{{ url_for('login') }}" method="post">
+                  <label>
+                    email:
+                    <input type="text" required name="email" placeholder="email...">
+                  </label>
+                  <label>
+                    hasło:
+                    <input type="password" required name="password" placeholder="hasło...">
+                  </label>
+                  <label>
+                  <button type="submit" onclick="close_popup_div(login_div)">zaloguj</button>
+                  </label>
+
+                  <button class="nice_button" onclick="close_popup_div(login_div)">zamknij okno</button>
+                </form>
+              </div>
+            </div>
+            <script>
+              var login_div = document.getElementById("login_background")
+            </script>
+            {% if logged_in %}
+            <form action="{{url_for('user_profile') }}" method="get">
+              <button class="button-menu"  type="submit">pokaż konto</button>
+            </form>
+            <form action="{{ url_for('logout') }}"  method="post">
+              <button class="button-menu"  type="submit">wyloguj</button>
+            </form>
+            {% endif %}
+          </div>
+          </div>
+        </div>
+      </div>
+      <div id="context">
+        <div id="big_pizza">
+          <div id="menu_context">
+            <div style="padding: 20px;">
     {% for pizza in pizzas %}
         {% if logged_in %}
             <form action="{{ url_for('add_to_cart') }}"  method="post">
         {% endif %}
         {{ pizza }}
         {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
-            <label>
-                <input type="number" name="{{ pizza.id }}" min="1" max="5" value="1">
+            <label style="margin: 5px;">
+                <input style="background-color: gray; color: white; border-width: 1px; border-color: gray;"
+                type="number" name="{{ pizza.id }}" min="1" max="5" value="1">
             </label>
-            <label>
-                <select name="select_size">
+            <label style="margin: 5px;">
+                <select style="background-color: gray; color: white;" name="select_size">
                     <option value="small">Mała</option>
                     <option value="medium">Średnia</option>
                     <option value="large">Duża</option>
@@ -27,18 +136,18 @@
             </label>
             {% endif %}
         <br>
-        <p>Dodatki: </p>
+        <font>Dodatki: </font>
         {% for topping in toppings %}
             {% if logged_in %} <!-- jak użytkownik jest zalogowany to wyświetli checkboxy -->
                 <label>
                     <input type="checkbox" name="check_group_topping" value="{{ topping.id }}">
                 </label>
             {% endif %}
-            {{ topping }},
+            {{ topping }}
         {% endfor %}
         <br>
             {% if logged_in %}
-                <button type="submit">Dodaj do koszyka</button>
+                <button class="nice_button" type="submit">Dodaj do koszyka</button>
             {% endif %}
         {% if logged_in %}
         </form>
@@ -52,25 +161,28 @@
             <label>
                 <input type="hidden" name="drink" value="{{ drink.id }}">
             </label>
-            <button type="submit">Dodaj do koszyka</button>
+            <button class="nice_button" type="submit">Dodaj do koszyka</button>
         </form>
         <br>
         {% endif %}
     {% endfor %}
     <!--</label>-->
     <br>
+    <div style="text-align: center;">
     {% if logged_in %}
         <form action="{{ url_for('show_cart') }}" method="get">
-            <button class="basket" class="close_button">przejdź do koszyka</button>
+            <button style="margin-bottom: 10px;" class="nice_button" class="basket" class="close_button">przejdź do koszyka</button>
         </form>
     {% endif %}
-    
-    
+
         <form action="{{ url_for('index') }}" method="get">
-            <button class="basket" type="submit">powrót</button>
+            <button class="nice_button" class="basket" type="submit">powrót</button>
         </form>
     </div>
+          </div>
+        </div>
+        </div>
+      </div>
     </div>
-    </div>
-</body>
+  </body>
 </html>
