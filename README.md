@@ -6,7 +6,7 @@ Spis Tresci
 ===========
 * [Opis problemu](#opis-problemu)
 * [Technologie](#technologie)
-* [Instalacja](#instalacja)
+* [Instalacja](#Instalacja)
 * [Rozwiązanie problemu](#rozwiązanie-problemu)
 * [Narzędzia wykorzystane do realizacji interfejsu](#narzędzia-wykorzystane-do-realizacji-interfejsu)
 
@@ -73,59 +73,5 @@ Należy zainstalować interpreter języka **Python** w wersji **3.6** oraz syste
  Z tego panelu możliwe jest tworzenie rekordów w bazie danych oraz przeglądanie historii zamówień.
 
 8. Panel klienta pizzerii dostępny jest pod adresem:
-
-        http://localhost:5000/
-        
-#### Windows:
-
-Można uruchomić aplikację poprzez program PyCharm:
-
-1. Pobranie programu PyCharm Professional Edition
-
-2. Pobranie projektu z GitHuba.
-
-3. W PyCharmie -> File -> New Project. Trzeba wybrać typ projektu -> Flask.
-
- W `Location` trzeba podać ścieżkę, gdzie mamy pobrany projekt z Githuba.
-
- Następnie rozwijamy `Projekt Interpreter` i ustawiamy `Virtualenv` i wybieramy Pythona 3.6
-
- Dajemy `Create` i PyCharm zapyta się czy stworzyć projekt z istniejących plików -> dajemy `Yes`.       
-
-4. File -> Settings -> Project Interpreter. Dodajemy i wybieramy Python 3.6.
-
-5. W PyCharmie -> Run -> Edit Configurations. Dodajemy nową konfigurację typu `Python`.
- 
- W `Script path` ustawiamy na plik `server.py`, który znajduje się w głównym katalogu projektu.
- 
- Ustawiamy `Python Interpreter` na Python 3.6
- 
-6. W oknie PyCharma powinien pokazać się pasek. Na nim są wyświetlone potrzebne moduły, żeby je zainstalować wciskamy: `Install requirements`.
-
- To zainstaluje potrzebne moduły wymienione w pliku **requirements.txt.**
-
-7. Następnie należy utworzyć bazę danych przy pomocy skryptu:
-
-        create_database.sql
-
-8. W pliku: Pizzeria-Projekt/python/flask/app.py należy wpisać:
-
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://USERNAME:PASSWORD@localhost/Pizzeria?charset=utf8'
-
- W miejscu **USERNAME** - nazwę użytkownika w bazie danych
-
- W miejscu **PASSWORD** - hasło dostępu do bazy danych
-
- Domyślnie ustawiono username: **root** oraz hasło: **root**.
-
-9. Uruchamiamy aplikację Run -> Run.
-
-10. Wpisać w przeglądarkę adres administratora zarządzania pizzerią:
-
-        http://localhost:5000/admin
-
- Z tego panelu możliwe jest tworzenie rekordów w bazie danych oraz przeglądanie historii zamówień.
-
-11. Panel klienta pizzerii dostępny jest pod adresem:
 
         http://localhost:5000/
